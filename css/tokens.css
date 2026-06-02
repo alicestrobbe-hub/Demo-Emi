@@ -1,0 +1,44 @@
+:root {
+  /* Palette EBM (da CLAUDE.md §6) — invariata */
+  --olive: #4A5430;
+  --olive-mid: #5C6A3C;
+  --sage: #6B7A47;
+  --sage-light: #8A9A5C;
+  --olive-pale: #D4D9C0;
+  --olive-faint: #ECEEE4;
+  --cream: #F5F0E8;
+  --sand: #E8E0D0;
+  --warm-white: #FAF8F4;
+  --terra: #C4917A;
+  --terra-dark: #A67A63;
+  --charcoal: #1C1C1A;
+  --charcoal-mid: #2E2E2C;
+  --muted: #6B6558;
+
+  /* Tipografia — schema reference Kasia Siwosz:
+     sans grottesco editoriale + serif italica per accenti */
+  --ff-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --ff-body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --ff-accent: "Instrument Serif", "Times New Roman", serif;
+
+  --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-anticipate: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --max-w: 1180px;
+  --max-w-narrow: 820px;
+  --pad: clamp(20px, 5vw, 60px);
+  --nav-h: 72px;
+
+  --r-img: 2px;
+  --r-card: 4px;
+  --r-form: 6px;
+  --r-pill: 999px;
+
+  --shadow-soft: 0 20px 60px -20px rgba(28, 28, 26, 0.18);
+  --shadow-card: 0 8px 32px -12px rgba(28, 28, 26, 0.10);
+
+  --t-micro: 200ms;
+  --t-fast: 320ms;
+  --t-reveal: 900ms;
+  --t-scrub: 1200ms;
+}

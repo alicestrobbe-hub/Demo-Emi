@@ -1,0 +1,254 @@
+/* ========== Reset ========== */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto;
+}
+
+/* Lenis */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* ========== Body ========== */
+body {
+  font-family: var(--ff-body);
+  font-weight: 400;
+  font-size: clamp(15px, 0.55vw + 0.78rem, 17px);
+  line-height: 1.55;
+  color: var(--charcoal);
+  background: var(--warm-white);
+  overflow-x: hidden;
+  min-height: 100vh;
+  letter-spacing: -0.005em;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+img, video { border-radius: var(--r-img); }
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+button { cursor: pointer; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ========== Tipografia ==========
+   Reference: sans grottesco moderno + italic serif per le enfasi.
+   Pesi: 300 light per display gigante; 400/500 per i body. */
+h1, h2, h3, h4, h5 {
+  font-family: var(--ff-display);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--charcoal);
+}
+
+h1 { font-size: clamp(3.2rem, 8.4vw, 7.6rem); line-height: 0.98; }
+h2 { font-size: clamp(2.4rem, 5.6vw, 4.8rem); line-height: 1.02; }
+h3 { font-size: clamp(1.5rem, 2.6vw, 2.2rem); font-weight: 400; line-height: 1.15; }
+h4 { font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.01em; }
+h5 { font-size: 0.95rem; font-weight: 500; letter-spacing: 0; }
+
+h1 em, h2 em, h3 em, h4 em, p em {
+  font-family: var(--ff-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+p { max-width: 64ch; line-height: 1.6; }
+p em { font-style: italic; }
+
+strong { font-weight: 600; }
+
+/* ========== Marker numerati editoriali ========== */
+.num {
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--olive);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.num::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--olive);
+  display: inline-block;
+}
+
+.eyebrow {
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.serif-italic {
+  font-family: var(--ff-accent);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ========== Layout ========== */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+.container-narrow {
+  width: 100%;
+  max-width: var(--max-w-narrow);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+section {
+  position: relative;
+  padding-block: clamp(80px, 13vh, 160px);
+}
+
+/* ========== A11y ========== */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 12px;
+  background: var(--charcoal);
+  color: var(--cream);
+  padding: 12px 20px;
+  border-radius: var(--r-pill);
+  z-index: 9999;
+  transition: top var(--t-fast) var(--ease-elegant);
+}
+.skip-link:focus-visible { top: 12px; }
+
+:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--olive);
+  color: var(--cream);
+}
+
+/* ========== Reveal hook ========== */
+[data-reveal] { will-change: transform, opacity; }
+[data-reveal="lines"] .line,
+[data-reveal="words"] .word { display: inline-block; }
+[data-reveal="lines"] .line-wrap { display: block; overflow: hidden; }
+
+[data-clip-reveal] {
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+
+/* ========== Pulsanti ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 16px 32px;
+  border-radius: var(--r-pill);
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: transform var(--t-fast) var(--ease-elegant),
+              background var(--t-fast) var(--ease-elegant),
+              color var(--t-fast) var(--ease-elegant),
+              border-color var(--t-fast) var(--ease-elegant);
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--olive);
+  color: var(--cream);
+}
+.btn-primary:hover { background: var(--charcoal); transform: translateY(-2px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--charcoal);
+  border-color: var(--charcoal);
+}
+.btn-ghost:hover { background: var(--charcoal); color: var(--cream); transform: translateY(-2px); }
+
+.btn-terra {
+  background: var(--terra);
+  color: var(--cream);
+}
+.btn-terra:hover { background: var(--terra-dark); transform: translateY(-2px); }
+
+/* ========== Link underline ========== */
+.link-underline {
+  position: relative;
+  display: inline-block;
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 28px; height: 1px;
+  background: currentColor;
+  transition: width var(--t-fast) var(--ease-elegant);
+}
+.link-underline:hover::after { width: 100%; }
+
+/* ========== Utility ========== */
+.full-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.is-dark { background: var(--charcoal); color: var(--cream); }
+.is-dark h1, .is-dark h2, .is-dark h3, .is-dark h4 { color: var(--cream); }
+.is-dark .eyebrow { color: var(--olive-pale); }
+.is-dark .num { color: var(--terra); }
+.is-dark .num::before { background: var(--terra); }
+
+.is-faint { background: var(--olive-faint); }
+.is-cream { background: var(--cream); }
+
+/* ========== Reduced motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

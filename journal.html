@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#FAF8F4" />
+<title>Journal — Emi Body Movement</title>
+<meta name="description" content="Letture brevi su movimento, ascolto, cura. Scritte da Emi, una a settimana." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" />
+
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/chrome.css" />
+<link rel="stylesheet" href="css/journal.css" />
+
+<link rel="preload" as="image" href="assets/chisono1.jpg" fetchpriority="high" />
+</head>
+<body>
+
+<a href="#main" class="skip-link">Vai al contenuto</a>
+
+<div class="scroll-progress" aria-hidden="true">
+  <div class="scroll-progress__bar"></div>
+</div>
+
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Emi Body Movement — Home">Emi Body Movement</a>
+    <div class="nav__center">
+      <nav aria-label="Principale">
+        <ul class="nav__links">
+          <li><a href="index.html#chi">Chi sono</a></li>
+          <li><a href="index.html#pacchetti">Percorsi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="journal.html" aria-current="page">Journal</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav__right">
+      <ul class="nav__social" aria-label="Social">
+        <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">IG</a></li>
+        <li><a href="mailto:ciao@emibodymovement.it">Mail</a></li>
+      </ul>
+      <a href="contatti.html" class="nav__cta" data-magnetic="0.25">Prenota</a>
+    </div>
+    <button class="nav__burger" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO charcoal con immagine -->
+  <section class="journal-hero" data-nav-theme="dark">
+    <div class="journal-hero__bg">
+      <img src="assets/herojournal.jpg" alt="" />
+      <div class="journal-hero__veil"></div>
+    </div>
+    <div class="container journal-hero__inner">
+      <span class="eyebrow" style="color: var(--olive-pale);">— Journal · 2026</span>
+      <h1 data-reveal="lines" class="journal-hero__title">
+        Letture<br><em>che pesano poco.</em>
+      </h1>
+      <p class="journal-hero__sub">
+        Sei letture brevi, una a settimana. Te le manda Emi a mano, la domenica sera. Niente automation, niente spam.
+      </p>
+    </div>
+    <span class="journal-hero__cue" aria-hidden="true">scroll</span>
+  </section>
+
+  <!-- MAGAZINE — sidebar sticky + articoli asimmetrici -->
+  <section class="magazine" aria-label="Archivio articoli">
+    <div class="container magazine__layout">
+
+      <!-- Sidebar numerata sticky -->
+      <aside class="mag-side" aria-label="Indice articoli">
+        <div class="mag-side__inner">
+          <span class="num">— Indice</span>
+          <ol class="mag-side__list">
+            <li><a href="#a01" data-spy="a01"><span>01</span> Tre cose che ho capito.</a></li>
+            <li><a href="#a02" data-spy="a02"><span>02</span> Perché la palestra non basta.</a></li>
+            <li><a href="#a03" data-spy="a03"><span>03</span> Il corpo nella vita di ogni giorno.</a></li>
+            <li><a href="#a04" data-spy="a04"><span>04</span> Cosa porto nei retreat.</a></li>
+            <li><a href="#a05" data-spy="a05"><span>05</span> Sorellanza non è moda.</a></li>
+            <li><a href="#a06" data-spy="a06"><span>06</span> Lentezza come allenamento.</a></li>
+          </ol>
+          <div class="mag-side__cta">
+            <span class="eyebrow">— Domenica sera</span>
+            <p>La lettera arriva da me, sempre.</p>
+            <a href="#newsletter" class="link-underline" data-cursor="ISCRIVITI">Iscriviti →</a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Articoli asimmetrici -->
+      <div class="mag-list">
+
+        <!-- FEATURED -->
+        <article class="mag-art mag-art--featured" id="a01">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <figure class="mag-art__visual" data-clip-reveal>
+              <img src="assets/subhero.jpg" alt="" loading="lazy" />
+            </figure>
+            <div class="mag-art__copy">
+              <span class="mag-art__cat">— In evidenza · Maggio</span>
+              <span class="mag-art__n">01</span>
+              <h2 class="mag-art__title">
+                Tre cose che ho capito<br>
+                <em>al primo allenamento.</em>
+              </h2>
+              <p class="mag-art__excerpt">
+                La differenza non la fa il programma. La fa quanto ti dai il permesso di
+                ascoltarti prima che qualcuno ti dica cosa fare. Una lettura di cinque minuti.
+              </p>
+              <span class="mag-art__meta">5 min · 25 Maggio 2026</span>
+            </div>
+          </a>
+        </article>
+
+        <!-- Articolo 2: split text/image -->
+        <article class="mag-art mag-art--split" id="a02">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <figure class="mag-art__visual">
+              <img src="assets/allenamenti1.jpg" alt="" loading="lazy" />
+            </figure>
+            <div class="mag-art__copy">
+              <span class="mag-art__cat">— Riflessione · Maggio</span>
+              <span class="mag-art__n">02</span>
+              <h3 class="mag-art__title">
+                Perché la palestra <em>tradizionale</em><br>
+                non funziona per molte di noi.
+              </h3>
+              <p class="mag-art__excerpt">
+                Sette anni dentro le palestre, quattro fuori. Ho visto cosa rompe e cosa tiene.
+              </p>
+              <span class="mag-art__meta">7 min · 18 Maggio</span>
+            </div>
+          </a>
+        </article>
+
+        <!-- Articolo 3: text-only quote -->
+        <article class="mag-art mag-art--quote" id="a03">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <span class="mag-art__cat">— Letture brevi</span>
+            <span class="mag-art__n">03</span>
+            <h3 class="mag-art__title">
+              Il corpo che funziona<br>
+              <em>nella vita di ogni giorno.</em>
+            </h3>
+            <p class="mag-art__excerpt">
+              Non è quanto sollevi. È quanto cammini, dormi, respiri. E quanto, alla fine
+              della giornata, sei ancora dentro al tuo corpo.
+            </p>
+            <span class="mag-art__meta">6 min · 11 Maggio</span>
+          </a>
+        </article>
+
+        <!-- Articolo 4: image-led -->
+        <article class="mag-art mag-art--image" id="a04">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <figure class="mag-art__visual">
+              <img src="assets/copertinacatamarano.jpg" alt="" loading="lazy" />
+            </figure>
+            <div class="mag-art__copy">
+              <span class="mag-art__cat">— Diario · Aprile</span>
+              <span class="mag-art__n">04</span>
+              <h3 class="mag-art__title">Cosa porto sempre <em>nei retreat.</em></h3>
+              <p class="mag-art__excerpt">Una guida onesta. Niente affiliati.</p>
+              <span class="mag-art__meta">4 min · 4 Maggio</span>
+            </div>
+          </a>
+        </article>
+
+        <!-- Articolo 5: split inverso -->
+        <article class="mag-art mag-art--split mag-art--reverse" id="a05">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <figure class="mag-art__visual">
+              <img src="assets/allenamenti2.jpg" alt="" loading="lazy" />
+            </figure>
+            <div class="mag-art__copy">
+              <span class="mag-art__cat">— Manifesto</span>
+              <span class="mag-art__n">05</span>
+              <h3 class="mag-art__title">
+                Sorellanza non è<br>
+                <em>una parola di moda.</em>
+              </h3>
+              <p class="mag-art__excerpt">
+                Cosa succede quando in una stanza ci sono solo donne. Niente teoria, solo
+                quello che ho visto.
+              </p>
+              <span class="mag-art__meta">8 min · 27 Aprile</span>
+            </div>
+          </a>
+        </article>
+
+        <!-- Articolo 6: quote finale -->
+        <article class="mag-art mag-art--quote" id="a06">
+          <a href="#" class="mag-art__inner" data-cursor="LEGGI">
+            <span class="mag-art__cat">— Letture brevi</span>
+            <span class="mag-art__n">06</span>
+            <h3 class="mag-art__title">Lentezza <em>come allenamento.</em></h3>
+            <p class="mag-art__excerpt">
+              La parte più difficile non è la fatica. È non scappare quando arriva la noia,
+              il dubbio, il "fammi vedere il telefono".
+            </p>
+            <span class="mag-art__meta">5 min · 20 Aprile</span>
+          </a>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEWSLETTER charcoal -->
+  <section class="newsletter" id="newsletter" data-nav-theme="dark">
+    <div class="newsletter__bg">
+      <img src="assets/allenamenti5.jpg" alt="" loading="lazy" />
+      <div class="newsletter__veil"></div>
+    </div>
+    <div class="container-narrow newsletter__inner">
+      <span class="eyebrow" style="color: var(--olive-pale);">— Domenica sera</span>
+      <h2 data-reveal="lines" style="margin-top: 28px;">Una lettera<br><em>e basta.</em></h2>
+      <p class="newsletter__sub">Nessuno spam, nessuna automation. Te la mando io quando ha senso, di solito una volta a settimana.</p>
+      <form class="newsletter__form" action="https://formspree.io/f/placeholder" method="POST" novalidate>
+        <input type="email" name="email" placeholder="La tua email" required aria-label="Email" />
+        <button type="submit" data-cursor="INVIA" data-magnetic="0.25">Manda</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">Emi.</div>
+        <p class="footer__tag">Studio di movimento femminile a Bolzano. <em class="serif-italic">Allenati Ascoltandoti.</em></p>
+      </div>
+      <div>
+        <h4>Mappa</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#chi">Chi sono</a></li>
+          <li><a href="index.html#pacchetti">Percorsi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="journal.html">Journal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatto</h4>
+        <ul>
+          <li><a href="contatti.html">Prenota</a></li>
+          <li><a href="mailto:ciao@emibodymovement.it">ciao@emibodymovement.it</a></li>
+          <li><a href="https://wa.me/393000000000" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <ul>
+          <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">@emi_coli</a></li>
+          <li><a href="https://instagram.com/emibodymovement" target="_blank" rel="noopener">@emibodymovement</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Emi Body Movement · Bolzano</span>
+      <span>Risposta entro 24h, sempre da Emi</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script src="js/reduced-motion.js" defer></script>
+<script src="js/gsap-setup.js" defer></script>
+<script src="js/lenis-init.js" defer></script>
+<script src="js/reveal.js" defer></script>
+<script src="js/chrome.js" defer></script>
+<script src="js/journal.js" defer></script>
+
+</body>
+</html>

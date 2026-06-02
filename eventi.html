@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1C1C1A" />
+<title>Eventi — Emi Body Movement</title>
+<meta name="description" content="Sei date dove movimento, cibo vero e persone si incontrano. Catamarano in Croazia, Roller & Brunch, retreat in Val d'Orcia." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" />
+
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/chrome.css" />
+<link rel="stylesheet" href="css/eventi.css" />
+
+<link rel="preload" as="image" href="assets/copertinacatamarano.jpg" fetchpriority="high" />
+</head>
+<body>
+
+<a href="#main" class="skip-link">Vai al contenuto</a>
+
+<div class="scroll-progress" aria-hidden="true">
+  <div class="scroll-progress__bar"></div>
+</div>
+
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Emi Body Movement — Home">Emi Body Movement</a>
+    <div class="nav__center">
+      <nav aria-label="Principale">
+        <ul class="nav__links">
+          <li><a href="index.html#chi">Chi sono</a></li>
+          <li><a href="index.html#pacchetti">Percorsi</a></li>
+          <li><a href="eventi.html" aria-current="page">Eventi</a></li>
+          <li><a href="journal.html">Journal</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav__right">
+      <ul class="nav__social" aria-label="Social">
+        <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">IG</a></li>
+        <li><a href="mailto:ciao@emibodymovement.it">Mail</a></li>
+      </ul>
+      <a href="contatti.html" class="nav__cta" data-magnetic="0.25">Prenota</a>
+    </div>
+    <button class="nav__burger" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO immersivo charcoal -->
+  <section class="eventi-hero" aria-label="Eventi · 2026" data-nav-theme="dark">
+    <div class="eventi-hero__bg">
+      <img src="assets/copertinacatamarano.jpg" alt="" />
+      <div class="eventi-hero__veil"></div>
+    </div>
+    <div class="container eventi-hero__inner">
+      <span class="eyebrow" style="color: var(--olive-pale);">Calendario 2026 · sei date</span>
+      <h1 data-reveal="lines" class="eventi-hero__title">
+        Sei date.<br>
+        <em>Sei ritorni.</em>
+      </h1>
+      <p class="eventi-hero__lead">
+        Movimento, cibo vero, donne che hanno deciso di prendersi una settimana, un weekend, una mattina. Alcune ti chiamano per nome. Alcune cambiano l'estate.
+      </p>
+      <span class="eventi-hero__scrollcue" aria-hidden="true">scorri</span>
+    </div>
+  </section>
+
+  <!-- ASYMMETRIC VERTICAL FLOW -->
+  <section class="eventi-flow" aria-label="Calendario eventi" data-eventi-flow>
+
+    <header class="eventi-flow__head">
+      <span class="num">Le date</span>
+      <h2 class="eventi-flow__h2" data-reveal="lines">
+        Una alla<br><em>volta.</em>
+      </h2>
+      <span class="eventi-flow__counter" aria-hidden="true">
+        <span class="eventi-flow__cur">01</span>
+        <span class="eventi-flow__sep">/</span>
+        <span class="eventi-flow__tot">06</span>
+      </span>
+    </header>
+
+    <div class="eventi-flow__rail" aria-hidden="true">
+      <span class="eventi-flow__rail-fill"></span>
+    </div>
+
+    <div class="eventi-flow__grid">
+
+      <article class="eflow eflow--01 eflow--wide-left" data-flow-card data-cat="movimento community">
+        <span class="eflow__index" aria-hidden="true">01</span>
+        <a href="eventi/roller.html" class="eflow__inner" data-cursor="SCOPRI">
+          <figure class="eflow__media">
+            <img src="assets/copertinaroller.jpg" alt="Roller & Brunch a Bolzano" loading="lazy" />
+          </figure>
+          <div class="eflow__copy">
+            <span class="eflow__cat">Movimento · Community</span>
+            <h3 class="eflow__title">Roller <em>& Brunch</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Data</dt><dd>6 Giugno · Bolzano</dd></div>
+              <div><dt>Dove</dt><dd>Salewa Bivac</dd></div>
+              <div><dt>Posti</dt><dd>4 su 15</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€35</dd></div>
+            </dl>
+            <span class="eflow__cta">Scopri →</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="eflow eflow--02 eflow--narrow-right" data-flow-card data-cat="retreat movimento">
+        <span class="eflow__index" aria-hidden="true">02</span>
+        <a href="eventi/catamarano.html" class="eflow__inner" data-cursor="SCOPRI">
+          <figure class="eflow__media eflow__media--tall">
+            <img src="assets/copertinacatamarano.jpg" alt="Catamarano in Croazia" loading="lazy" />
+          </figure>
+          <div class="eflow__copy">
+            <span class="eflow__cat">Retreat · Viaggio</span>
+            <h3 class="eflow__title">Catamarano <em>in Croazia</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Date</dt><dd>8 / 15 Agosto</dd></div>
+              <div><dt>Dove</dt><dd>Sette notti, cabine</dd></div>
+              <div><dt>Posti</dt><dd>3 cabine libere</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€2.240</dd></div>
+            </dl>
+            <span class="eflow__cta">Scopri →</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="eflow eflow--03 eflow--text-led is-soon" data-flow-card data-cat="movimento">
+        <span class="eflow__index" aria-hidden="true">03</span>
+        <div class="eflow__inner">
+          <figure class="eflow__media eflow__media--strip">
+            <img src="assets/allenamenti5.jpg" alt="" loading="lazy" />
+            <span class="eflow__soon">In arrivo</span>
+          </figure>
+          <div class="eflow__copy">
+            <span class="eflow__cat">Movimento · Outdoor</span>
+            <h3 class="eflow__title">Sunrise Yoga <em>sul Talvera</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Data</dt><dd>22 Giugno · Bolzano</dd></div>
+              <div><dt>Dove</dt><dd>Lungo Talvera, 06:30</dd></div>
+              <div><dt>Posti</dt><dd>Lista d'attesa</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€20</dd></div>
+            </dl>
+            <span class="eflow__cta">In arrivo</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="eflow eflow--04 eflow--wide-right" data-flow-card data-cat="movimento community">
+        <span class="eflow__index" aria-hidden="true">04</span>
+        <a href="contatti.html?evento=hike" class="eflow__inner" data-cursor="SCOPRI">
+          <figure class="eflow__media">
+            <img src="assets/generic1.jpg" alt="Hike & Talk lago di Carezza" loading="lazy" />
+          </figure>
+          <div class="eflow__copy">
+            <span class="eflow__cat">Movimento · Lentezza</span>
+            <h3 class="eflow__title">Hike <em>& Talk</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Data</dt><dd>13 Luglio · Bolzano</dd></div>
+              <div><dt>Dove</dt><dd>Lago di Carezza, 09:00</dd></div>
+              <div><dt>Posti</dt><dd>8 posti</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€55</dd></div>
+            </dl>
+            <span class="eflow__cta">Scrivimi →</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="eflow eflow--05 eflow--full-bleed" data-flow-card data-cat="retreat community">
+        <span class="eflow__index" aria-hidden="true">05</span>
+        <a href="contatti.html?evento=valdorcia" class="eflow__inner" data-cursor="SCOPRI">
+          <figure class="eflow__media eflow__media--bleed">
+            <img src="assets/gneric2.jpg" alt="Retreat in Val d'Orcia" loading="lazy" />
+            <div class="eflow__veil"></div>
+          </figure>
+          <div class="eflow__copy eflow__copy--over">
+            <span class="eflow__cat">Retreat · Viaggio</span>
+            <h3 class="eflow__title">Retreat <em>in Val d'Orcia</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Date</dt><dd>19 / 21 Settembre</dd></div>
+              <div><dt>Dove</dt><dd>Due notti, movimento e lentezza</dd></div>
+              <div><dt>Posti</dt><dd>6 posti</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€480</dd></div>
+            </dl>
+            <span class="eflow__cta">Scrivimi →</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="eflow eflow--06 eflow--center-small" data-flow-card data-cat="movimento">
+        <span class="eflow__index" aria-hidden="true">06</span>
+        <a href="contatti.html?evento=workshop" class="eflow__inner" data-cursor="SCOPRI">
+          <figure class="eflow__media">
+            <img src="assets/allenamenti3.jpg" alt="Workshop postura & respiro" loading="lazy" />
+          </figure>
+          <div class="eflow__copy">
+            <span class="eflow__cat">Workshop · Studio</span>
+            <h3 class="eflow__title">Workshop <em>postura & respiro</em></h3>
+            <dl class="eflow__meta">
+              <div><dt>Data</dt><dd>29 Giugno · Bolzano</dd></div>
+              <div><dt>Dove</dt><dd>Studio EBM, 18:30</dd></div>
+              <div><dt>Posti</dt><dd>12 posti</dd></div>
+              <div><dt>Prezzo</dt><dd class="eflow__price">€25</dd></div>
+            </dl>
+            <span class="eflow__cta">Scrivimi →</span>
+          </div>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CTA finale -->
+  <section class="block centered eventi-cta">
+    <div class="container-narrow">
+      <span class="num" style="display: inline-flex;">Non trovi una data?</span>
+      <h2 data-reveal="lines" style="margin-top: 28px;">
+        Scrivimi<br><em>quando vuoi.</em>
+      </h2>
+      <p style="margin-top: 24px; color: var(--muted); max-width: 44ch;">
+        Sto organizzando nuove date, anche piccole, anche su misura. L'unico modo per dirmelo è il form o i miei canali social.
+      </p>
+      <div style="margin-top: 40px;">
+        <a href="contatti.html" class="btn btn-primary" data-cursor="SCRIVI" data-magnetic="0.3">Scrivimi dal form</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">Emi.</div>
+        <p class="footer__tag">Studio di movimento femminile a Bolzano. <em class="serif-italic">Allenati Ascoltandoti.</em></p>
+      </div>
+      <div>
+        <h4>Mappa</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#chi">Chi sono</a></li>
+          <li><a href="index.html#pacchetti">Percorsi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="journal.html">Journal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatto</h4>
+        <ul>
+          <li><a href="contatti.html">Prenota</a></li>
+          <li><a href="mailto:ciao@emibodymovement.it">ciao@emibodymovement.it</a></li>
+          <li><a href="https://wa.me/393000000000" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <ul>
+          <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">@emi_coli</a></li>
+          <li><a href="https://instagram.com/emibodymovement" target="_blank" rel="noopener">@emibodymovement</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Emi Body Movement · Bolzano</span>
+      <span>Risposta entro 24h, sempre da Emi</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script src="js/reduced-motion.js" defer></script>
+<script src="js/gsap-setup.js" defer></script>
+<script src="js/lenis-init.js" defer></script>
+<script src="js/reveal.js" defer></script>
+<script src="js/chrome.js" defer></script>
+<script src="js/eventi.js" defer></script>
+
+</body>
+</html>

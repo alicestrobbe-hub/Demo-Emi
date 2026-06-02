@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#FAF8F4" />
+<title>Contatti — Emi Body Movement</title>
+<meta name="description" content="Scrivimi. Una domanda alla volta. Rispondo io in persona entro 24 ore." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" />
+
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/chrome.css" />
+<link rel="stylesheet" href="css/contatti.css" />
+</head>
+<body>
+
+<a href="#main" class="skip-link">Vai al contenuto</a>
+
+<div class="scroll-progress" aria-hidden="true">
+  <div class="scroll-progress__bar"></div>
+</div>
+
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Emi Body Movement — Home">Emi Body Movement</a>
+    <div class="nav__center">
+      <nav aria-label="Principale">
+        <ul class="nav__links">
+          <li><a href="index.html#percorsi">Percorsi</a></li>
+          <li><a href="index.html#chi">Chi è Emi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="journal.html">Journal</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav__right">
+      <ul class="nav__social" aria-label="Social">
+        <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">IG</a></li>
+        <li><a href="mailto:ciao@emibodymovement.it">Mail</a></li>
+      </ul>
+      <a href="contatti.html" class="nav__cta" aria-current="page">Prenota</a>
+    </div>
+    <button class="nav__burger" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="contatti">
+  <div class="container">
+    <div class="contatti__layout">
+
+      <div class="contatti__form-wrap">
+        <div class="contatti__step-counter" aria-hidden="true">
+          <span id="stepCurrent">01</span> <span>/ 04</span>
+        </div>
+
+        <form id="contattiForm" action="https://formspree.io/f/placeholder" method="POST" novalidate>
+          <input type="hidden" name="cerco" id="cercoField" />
+          <input type="hidden" name="evento" id="eventoField" />
+          <input type="hidden" name="pkg" id="pkgField" />
+
+          <!-- Step 1: Nome -->
+          <div class="contatti__step is-active" data-step="1">
+            <h2 class="contatti__question">Ciao,<br><em>come ti chiami?</em></h2>
+            <input type="text" name="nome" id="nomeInput" class="contatti__input" placeholder="Il tuo nome" autocomplete="given-name" required aria-label="Nome" />
+            <div class="contatti__actions">
+              <button type="button" class="btn btn-primary" data-next data-cursor="AVANTI">Continua</button>
+              <button type="button" class="contatti__back" data-back disabled>← indietro</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Cosa cerchi -->
+          <div class="contatti__step" data-step="2">
+            <h2 class="contatti__question"><span id="greetName">Ciao,</span><br><em>cosa cerchi davvero?</em></h2>
+            <div class="contatti__tiles" role="radiogroup" aria-label="Cosa cerchi">
+              <button type="button" class="contatti__tile" data-tile="percorso">
+                <h4>Un percorso personale</h4>
+                <p>Voglio iniziare ad allenarmi nello studio a Bolzano.</p>
+              </button>
+              <button type="button" class="contatti__tile" data-tile="evento">
+                <h4>Info su un evento</h4>
+                <p>Catamarano, Roller, retreat: vorrei sapere di più.</p>
+              </button>
+              <button type="button" class="contatti__tile" data-tile="community">
+                <h4>Far parte della community</h4>
+                <p>Non so ancora cosa, voglio solo essere dentro.</p>
+              </button>
+              <button type="button" class="contatti__tile" data-tile="curiosa">
+                <h4>Sono curiosa</h4>
+                <p>Ho letto qualcosa, mi parli un po' di EBM?</p>
+              </button>
+            </div>
+            <div class="contatti__actions">
+              <button type="button" class="btn btn-primary" data-next data-cursor="AVANTI">Continua</button>
+              <button type="button" class="contatti__back" data-back>← indietro</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Messaggio -->
+          <div class="contatti__step" data-step="3">
+            <h2 class="contatti__question">Cosa vuoi<br><em>dirmi?</em></h2>
+            <textarea name="messaggio" id="messaggioInput" class="contatti__input" placeholder="Scrivi quello che ti viene…" rows="5" aria-label="Messaggio"></textarea>
+            <div class="contatti__actions">
+              <button type="button" class="btn btn-primary" data-next data-cursor="AVANTI">Continua</button>
+              <button type="button" class="contatti__back" data-back>← indietro</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Email -->
+          <div class="contatti__step" data-step="4">
+            <h2 class="contatti__question">Dove ti rispondo?<br><em>La tua email.</em></h2>
+            <input type="email" name="email" id="emailInput" class="contatti__input" placeholder="nome@email.com" autocomplete="email" required aria-label="Email" />
+            <div class="contatti__actions">
+              <button type="submit" class="btn btn-primary" data-cursor="INVIA">Manda il messaggio</button>
+              <button type="button" class="contatti__back" data-back>← indietro</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="contatti__success" id="successPanel" aria-live="polite">
+          <span class="eyebrow">Ricevuto.</span>
+          <h2 data-reveal="lines" style="margin-top: 28px;"><span id="successName">Grazie.</span><br><em>Ti scrivo a presto.</em></h2>
+          <p>Nel frattempo, se ti va, qualche lettura dal <a href="journal.html" class="link-underline" style="display:inline; padding-bottom:2px;">Journal</a>. O un salto su <a href="https://instagram.com/emi_coli" target="_blank" rel="noopener" class="link-underline" style="display:inline; padding-bottom:2px;">@emi_coli</a>.</p>
+        </div>
+      </div>
+
+      <aside class="contatti__info">
+        <figure class="contatti__info-visual">
+          <img src="assets/chisono.jpg" alt="Emi Coli" loading="lazy" />
+        </figure>
+        <span class="eyebrow">Rispondo io, sempre</span>
+        <p style="margin-top: 14px; color: var(--charcoal-mid); line-height: 1.6;">
+          Niente staff, niente bot. Per parlarmi, conoscere il mio lavoro o iniziare un percorso, l'unica strada è il form qui a fianco o i miei canali social. Rispondo personalmente.
+        </p>
+
+        <dl>
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:ciao@emibodymovement.it">ciao@emibodymovement.it</a></dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">@emi_coli</a></dd>
+          </div>
+          <div>
+            <dt>Studio</dt>
+            <dd>Bolzano · Italia</dd>
+          </div>
+        </dl>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">Emi.</div>
+        <p class="footer__tag">Studio di movimento femminile premium a Bolzano. <em class="serif-italic">Allenati Ascoltandoti.</em></p>
+      </div>
+      <div>
+        <h4>Mappa</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#chi">Chi è Emi</a></li>
+          <li><a href="index.html#percorsi">Percorsi</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="journal.html">Journal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatto</h4>
+        <ul>
+          <li><a href="contatti.html">Prenota</a></li>
+          <li><a href="mailto:ciao@emibodymovement.it">ciao@emibodymovement.it</a></li>
+          <li><a href="https://wa.me/393000000000" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <ul>
+          <li><a href="https://instagram.com/emi_coli" target="_blank" rel="noopener">@emi_coli</a></li>
+          <li><a href="https://instagram.com/emibodymovement" target="_blank" rel="noopener">@emibodymovement</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Emi Body Movement · Bolzano</span>
+      <span>Risposta entro 24h, sempre da Emi</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script src="js/reduced-motion.js" defer></script>
+<script src="js/gsap-setup.js" defer></script>
+<script src="js/lenis-init.js" defer></script>
+<script src="js/reveal.js" defer></script>
+<script src="js/chrome.js" defer></script>
+<script src="js/contatti.js" defer></script>
+
+</body>
+</html>
