@@ -15,8 +15,10 @@
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/chrome.css" />
 <link rel="stylesheet" href="css/journal.css" />
+<link rel="stylesheet" href="css/mobile.css" />
 
-<link rel="preload" as="image" href="assets/chisono1.jpg" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/herojournal.jpg" media="(min-width: 721px)" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/emi1.jpg" media="(max-width: 720px)" fetchpriority="high" />
 </head>
 <body>
 
@@ -32,6 +34,7 @@
     <div class="nav__center">
       <nav aria-label="Principale">
         <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
           <li><a href="index.html#chi">Chi sono</a></li>
           <li><a href="index.html#pacchetti">Percorsi</a></li>
           <li><a href="eventi.html">Eventi</a></li>
@@ -57,7 +60,10 @@
   <!-- HERO charcoal con immagine -->
   <section class="journal-hero" data-nav-theme="dark">
     <div class="journal-hero__bg">
-      <img src="assets/herojournal.jpg" alt="" />
+      <picture>
+        <source media="(max-width: 720px)" srcset="assets/emi1.jpg" />
+        <img src="assets/herojournal.jpg" alt="" />
+      </picture>
       <div class="journal-hero__veil"></div>
     </div>
     <div class="container journal-hero__inner">

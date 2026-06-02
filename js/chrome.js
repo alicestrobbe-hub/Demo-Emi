@@ -4,11 +4,67 @@
 
   /* ======================================
      SPLASH — "Emi Body Movement"
-     Solo al primissimo accesso (localStorage). Reduced-motion: skip.
+     Compare SOLO al primo accesso nella sessione o su refresh esplicito.
+     Mai durante la navigazione interna fra pagine del sito.
      ====================================== */
   const splash = document.querySelector(".splash");
   let splashShown = false;
+
+  /* Determina se mostrare la splash:
+     - primo ingresso nella sessione (no flag in sessionStorage) → sì
+     - reload della pagina (navigation type "reload") → sì
+     - navigazione interna (link → link) → no */
+  let shouldShowSplash = false;
   if (splash) {
+    let navType = "navigate";
+    try {
+      const navEntry = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      if (navEntry && navEntry.type) navType = navEntry.type;
+      else if (performance.navigation) {
+        navType = performance.navigation.type === 1 ? "reload" : "navigate";
+      }
+    } catch (_) {}
+    const firstVisit = !sessionStorage.getItem("ebm_splashed");
+    shouldShowSplash = firstVisit || navType === "reload";
+    if (!shouldShowSplash) splash.remove();
+    else sessionStorage.setItem("ebm_splashed", "1");
+  }
+
+  /* Preload di tutte le immagini (img tag + background-image) della pagina.
+     Cap a 6s per evitare blocchi se una risorsa è lenta/irraggiungibile. */
+  function preloadAllImages() {
+    const urls = new Set();
+    document.querySelectorAll("img").forEach((img) => {
+      const src = img.currentSrc || img.getAttribute("src");
+      if (src) urls.add(src);
+      const ss = img.getAttribute("srcset");
+      if (ss) ss.split(",").forEach((p) => {
+        const u = p.trim().split(/\s+/)[0];
+        if (u) urls.add(u);
+      });
+    });
+    document.querySelectorAll("*").forEach((el) => {
+      const bg = getComputedStyle(el).backgroundImage;
+      if (!bg || bg === "none") return;
+      const matches = bg.match(/url\((['"]?)([^'")]+)\1\)/g);
+      if (!matches) return;
+      matches.forEach((m) => {
+        const u = m.replace(/^url\((['"]?)/, "").replace(/(['"]?)\)$/, "");
+        if (u && !u.startsWith("data:")) urls.add(u);
+      });
+    });
+    const promises = Array.from(urls).map((u) => new Promise((res) => {
+      const img = new Image();
+      img.onload = img.onerror = () => res();
+      img.src = u;
+    }));
+    return Promise.race([
+      Promise.all(promises),
+      new Promise((res) => setTimeout(res, 6000)),
+    ]);
+  }
+
+  if (splash && shouldShowSplash) {
     if (reduced) {
       splash.remove();
     } else {
@@ -16,47 +72,54 @@
       if (window.EBM.lenis) window.EBM.lenis.stop();
       document.body.style.overflow = "hidden";
 
+      const preloadPromise = preloadAllImages();
+
       const eyebrow = splash.querySelector(".splash__eyebrow");
-      const wordEmi = splash.querySelectorAll(".splash__word--emi .splash__char");
-      const wordBody = splash.querySelectorAll(".splash__word--body .splash__char");
-      const wordMov = splash.querySelectorAll(".splash__word--movement .splash__char");
+      const words = splash.querySelector(".splash__words");
       const rule = splash.querySelector(".splash__rule");
       const tag = splash.querySelector(".splash__tag");
       const veil = splash.querySelector(".splash__veil");
 
-      if (window.gsap) {
-        const tl = gsap.timeline({
-          defaults: { ease: "expo.out" },
+      function runExit() {
+        if (!window.gsap) {
+          splash.classList.add("is-hidden");
+          splash.style.transform = "translateY(-100%)";
+          document.body.style.overflow = "";
+          if (window.EBM.lenis) window.EBM.lenis.start();
+          setTimeout(() => splash.remove(), 600);
+          return;
+        }
+        const exitTl = gsap.timeline({
+          defaults: { ease: "power4.inOut" },
           onComplete: () => {
             splash.classList.add("is-hidden");
             document.body.style.overflow = "";
             if (window.EBM.lenis) window.EBM.lenis.start();
-            setTimeout(() => splash.remove(), 80);
-          }
+            setTimeout(() => splash.remove(), 60);
+          },
         });
+        exitTl.to(veil, { yPercent: -100, duration: 0.65 })
+              .to(splash.querySelector(".splash__inner"), {
+                yPercent: -30, opacity: 0, duration: 0.5, ease: "power3.in",
+              }, "<")
+              .to(splash, { yPercent: -100, duration: 0.55 }, "-=0.3");
+      }
 
-        tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.7 })
+      if (window.gsap) {
+        const introTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        introTl.to(eyebrow, { opacity: 1, y: 0, duration: 0.45 })
           .add(() => { if (eyebrow) eyebrow.classList.add("is-in"); }, "<")
-          .to(wordEmi, { yPercent: 0, duration: 1.1, stagger: 0.045 }, "-=0.35")
-          .to(wordBody, { yPercent: 0, duration: 1.1, stagger: 0.04 }, "-=0.85")
-          .to(wordMov, { yPercent: 0, duration: 1.1, stagger: 0.035 }, "-=0.95")
-          .to(rule, { scaleX: 1, duration: 0.9, ease: "power3.inOut" }, "-=0.55")
-          .to(tag, { opacity: 1, y: 0, duration: 0.6 }, "-=0.5")
-          .to({}, { duration: 0.45 })
-          /* veil sale dal basso */
-          .to(veil, { yPercent: -100, duration: 0.9, ease: "power4.inOut" })
-          /* contenuto si solleva via in parallelo */
-          .to(splash.querySelector(".splash__inner"), {
-            yPercent: -40, opacity: 0, duration: 0.7, ease: "power3.in"
-          }, "<")
-          .to(splash, { yPercent: -100, duration: 0.7, ease: "power4.inOut" }, "-=0.35");
+          .to(words, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" }, "-=0.25")
+          .to(rule, { scaleX: 1, duration: 0.55, ease: "power3.inOut" }, "-=0.4")
+          .to(tag, { opacity: 1, y: 0, duration: 0.4 }, "-=0.35")
+          .to({}, { duration: 0.25 });
+
+        introTl.eventCallback("onComplete", () => {
+          preloadPromise.then(runExit);
+        });
       } else {
-        setTimeout(() => {
-          splash.classList.add("is-hidden");
-          splash.style.transform = "translateY(-100%)";
-          document.body.style.overflow = "";
-          setTimeout(() => splash.remove(), 800);
-        }, 1500);
+        preloadPromise.then(() => setTimeout(runExit, 500));
       }
     }
   }
@@ -127,14 +190,11 @@
   }
 
   /* ======================================
-     Custom magnetic cursor
+     Custom cursor — sempre puntino statico, non cambia su elementi cliccabili
      ====================================== */
   if (!isTouch && !reduced) {
     const cursor = document.createElement("div");
     cursor.className = "cursor";
-    const label = document.createElement("span");
-    label.className = "cursor__label";
-    cursor.appendChild(label);
     document.body.appendChild(cursor);
 
     let tx = 0, ty = 0, cx = 0, cy = 0;
@@ -146,17 +206,6 @@
       requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
-
-    document.querySelectorAll("a, button, [data-cursor]").forEach((el) => {
-      const customLabel = el.dataset.cursor || "VIEW";
-      el.addEventListener("mouseenter", () => {
-        cursor.classList.add("is-hover");
-        label.textContent = customLabel;
-      });
-      el.addEventListener("mouseleave", () => {
-        cursor.classList.remove("is-hover");
-      });
-    });
 
     /* Magnetic effect on [data-magnetic] elements */
     document.querySelectorAll("[data-magnetic]").forEach((el) => {

@@ -15,8 +15,10 @@
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/chrome.css" />
 <link rel="stylesheet" href="css/home.css" />
+<link rel="stylesheet" href="css/mobile.css" />
 
-<link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/hero.jpg" media="(min-width: 721px)" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/mobilehero.jpg" media="(max-width: 720px)" fetchpriority="high" />
 </head>
 <body>
 
@@ -57,6 +59,7 @@
     <div class="nav__center">
       <nav aria-label="Principale">
         <ul class="nav__links">
+          <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="#chi">Chi sono</a></li>
           <li><a href="#pacchetti">Percorsi</a></li>
           <li><a href="eventi.html">Eventi</a></li>
@@ -82,7 +85,10 @@
   <!-- ====== HERO ====== -->
   <section class="hero" aria-label="Apertura" data-nav-theme="dark">
     <div class="hero__bg" data-parallax-img>
-      <img src="assets/hero.jpg" alt="Studio EBM — sessione di movimento" />
+      <picture>
+        <source media="(max-width: 720px)" srcset="assets/mobilehero.jpg" />
+        <img src="assets/hero.jpg" alt="Studio EBM — sessione di movimento" />
+      </picture>
       <div class="hero__bg-veil"></div>
     </div>
     <div class="container hero__inner">
@@ -299,7 +305,10 @@
   <!-- ====== FINAL CTA ====== -->
   <section class="block final-cta" data-nav-theme="dark">
     <div class="final-cta__bg">
-      <img src="assets/heroactivity.jpg" alt="" loading="lazy" />
+      <picture>
+        <source media="(max-width: 720px)" srcset="assets/emi2.jpg" />
+        <img src="assets/heroactivity.jpg" alt="" loading="lazy" />
+      </picture>
       <div class="final-cta__veil"></div>
     </div>
     <div class="container-narrow final-cta__inner">
