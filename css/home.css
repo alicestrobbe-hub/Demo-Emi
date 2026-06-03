@@ -414,8 +414,12 @@
 .pac.is-featured .pac__cta { color: var(--cream); border-color: var(--cream); }
 .pac.is-featured .pac__cta:hover { color: var(--terra); border-color: var(--terra); }
 
-.pacchetti__foot {
+.pacchetti .pacchetti__foot {
+  display: block;
   margin-top: clamp(56px, 8vh, 96px);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 64ch;
   font-size: 1.05rem;
   color: var(--charcoal-mid);
   text-align: center;
