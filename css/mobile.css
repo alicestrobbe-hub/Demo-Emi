@@ -76,6 +76,13 @@
   /* ===== Nav base (closed) ===== */
   .nav__logo { font-size: 1.15rem; }
   .nav__inner { gap: 16px; padding-inline: 20px; }
+  body:has(.hero) .nav.is-dark-theme:not(.is-scrolled):not(.is-open) .nav__logo {
+    color: var(--olive);
+    text-shadow: 0 1px 18px rgba(250, 248, 244, 0.78);
+  }
+  body:has(.hero) .nav.is-dark-theme:not(.is-scrolled):not(.is-open) .nav__burger span {
+    background: var(--olive);
+  }
 
   /* ===== Splash ===== */
   .splash__inner { padding: 0 24px; }
@@ -96,24 +103,14 @@
   .journal-hero__cue { display: none !important; }
 
   /* ============================================================
-     HOME — Hero (mobile redesign v2)
-     • Foto in alto, fascia ariosa sotto per la tipografia
-     • Transizione fluida senza seam: la fascia foto sfuma in cream
-       e il blocco testo risale dentro la coda del gradiente
-     • Gerarchia: H1 → H1 → descrizione → eyebrow → CTA → link
+     HOME — Hero (mobile)
+     • Foto in alto, fascia beige sotto per la tipografia
+     • Il corpo pagina torna al warm-white desktop
      • Titoli unificati in olive-sage (stesso token del CTA)
      ============================================================ */
-  /* UNIFICAZIONE BG SU MOBILE — tutto cream (#F5F0E8).
-     Causa del bug: body/manifesto/testimonials usano --warm-white
-     (#FAF8F4), mentre hero e gradient usano --cream (#F5F0E8). La
-     differenza è minima ma sufficiente a creare una linea visibile
-     quando il parallax fa scivolare il blocco testo (cream) sopra
-     la foto e contemporaneamente il manifesto (warm-white) sale di
-     -160px coprendo la fine della hero. Allineando tutto a cream
-     spariscono i confini orizzontali. */
-  body { background: var(--cream); }
+  body { background: var(--warm-white); }
   .manifesto,
-  .testimonials { background: var(--cream); }
+  .testimonials { background: var(--warm-white); }
 
   .hero {
     min-height: auto;
@@ -172,9 +169,9 @@
     pointer-events: none;
   }
 
-  /* Blocco testo: risale dentro la coda del gradiente con margin-top
-     negativo + secondo gradiente locale che inizia trasparente e
-     diventa cream pieno. Risultato: nessun seam orizzontale. */
+  /* Blocco testo: resta nella hero beige. I reveal del titolo sono
+     gestiti da reveal.js; niente drift scroll-linked qui, così sotto
+     al testo non si apre una fascia vuota durante lo scroll. */
   .hero__inner {
     position: relative;
     z-index: 2;
@@ -187,11 +184,6 @@
     justify-content: flex-start;
     text-align: center;
     color: var(--charcoal);
-    /* Gradient di overlap col velo della foto: parte transparent e
-       arriva a cream pieno entro il 55% della propria altezza, così
-       sotto il blocco testo è sempre cream solido. Nessun half-tone
-       cream che, traslando sopra zone scure della foto, possa
-       generare bordi visibili. */
     background: linear-gradient(180deg,
       rgba(245,240,232,0.00) 0%,
       rgba(245,240,232,0.55) 22%,
@@ -209,6 +201,8 @@
     letter-spacing: -0.035em;
     max-width: none;
     text-align: center;
+    transform-origin: 50% 20%;
+    will-change: transform, opacity;
   }
   .hero__title em {
     color: var(--olive);
@@ -222,6 +216,7 @@
     line-height: 1.55;
     max-width: 30ch;
     text-align: center;
+    will-change: transform, opacity;
   }
 
   /* Eyebrow originale: riposizionata via flex order tra descrizione
@@ -257,6 +252,7 @@
     align-items: center;
     width: 100%;
     max-width: 300px;
+    will-change: transform, opacity;
   }
   .hero__row .btn { width: 100%; justify-content: center; }
   .hero__row .link-underline {
@@ -1241,4 +1237,3 @@ body:has(.nav.is-open) { overflow: hidden; }
     animation: none !important;
   }
 }
-

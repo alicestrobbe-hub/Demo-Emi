@@ -26,41 +26,152 @@
   }
 
   /* ===== Hero text drift (solo mobile) =====
-     Parallax tied-to-scroll: tutto il blocco testo sale insieme
-     mentre la hero esce. Niente stagger — gli elementi si muovono
-     uniformemente per mantenere intatte le spaziature e non far
-     sovrapporre la eyebrow con il bottone.
-
-     In parallelo, la .hero stessa riduce il proprio spazio nel
-     flusso (marginBottom negativo): la sezione successiva
-     (.manifesto) viene tirata su della stessa quantità del drift,
-     così sotto il testo che sale non resta un'ampia fascia cream
-     vuota — è il contenuto del manifesto a colmare visivamente
-     lo spazio in tempo reale, sincronizzato allo scroll. */
+     Effetto scroll mantenuto senza muovere il pannello beige:
+     animiamo solo testo e CTA, lasciando stabile il layout della hero. */
   if (!reduced && isMobile) {
-    const heroInner = document.querySelector(".hero__inner");
-    const heroSection = document.querySelector(".hero");
-    if (heroInner && heroSection) {
-      const drift = 160;
-      const trigger = {
-        trigger: ".hero",
-        start: "top top",
-        end: "40% top",
-        scrub: 1.0,
-      };
-      gsap.to(heroInner, {
-        y: -drift,
-        /* Niente opacity: con un fade attivo, il bg cream del
-           blocco testo diventava semi-trasparente durante lo scroll
-           e lasciava intravedere la foto sottostante, creando
-           proprio quel "taglio orizzontale" sulla foto. */
-        ease: "none",
-        scrollTrigger: trigger,
+    const hero = document.querySelector(".hero");
+    const title = document.querySelector(".hero__title");
+    const sub = document.querySelector(".hero__sub");
+    const eyebrow = document.querySelector(".hero__eyebrow");
+    const row = document.querySelector(".hero__row");
+
+    if (hero && title) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom 38%",
+          scrub: 0.9,
+        },
       });
-      gsap.to(heroSection, {
-        marginBottom: -drift,
+
+      tl.to(title, {
+        y: -86,
+        scale: 0.94,
+        opacity: 0.22,
         ease: "none",
-        scrollTrigger: trigger,
+      }, 0);
+
+      if (sub) {
+        tl.to(sub, {
+          y: -62,
+          opacity: 0,
+          ease: "none",
+        }, 0.04);
+      }
+
+      if (eyebrow) {
+        tl.to(eyebrow, {
+          y: -42,
+          opacity: 0,
+          ease: "none",
+        }, 0.08);
+      }
+
+      if (row) {
+        tl.to(row, {
+          y: -28,
+          opacity: 0.18,
+          ease: "none",
+        }, 0.12);
+      }
+    }
+  }
+
+  /* ===== Homepage section motion ===== */
+  if (!reduced) {
+    const manifestoLead = document.querySelector(".manifesto .lead");
+    const pillars = gsap.utils.toArray(".manifesto__pillars .pillar");
+    if (manifestoLead) {
+      gsap.from(manifestoLead, {
+        opacity: 0,
+        y: 34,
+        duration: 0.9,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: manifestoLead,
+          start: "top 84%",
+          once: true,
+        },
+      });
+    }
+    if (pillars.length) {
+      gsap.set(pillars, { opacity: 0, y: 42 });
+      ScrollTrigger.batch(pillars, {
+        start: "top 86%",
+        onEnter: (els) => gsap.to(els, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "expo.out",
+          stagger: 0.12,
+        }),
+        once: true,
+      });
+    }
+
+    const bioCarousel = document.querySelector(".bio__carousel");
+    const bioStinger = document.querySelector(".bio__stinger");
+    const bioCopy = document.querySelector(".bio__copy");
+    if (bioCarousel) {
+      gsap.fromTo(bioCarousel,
+        { clipPath: "inset(12% 0 12% 0)", y: 42, opacity: 0.72 },
+        {
+          clipPath: "inset(0% 0 0% 0)",
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: bioCarousel,
+            start: "top 82%",
+            once: true,
+          },
+        }
+      );
+    }
+    if (bioStinger) {
+      gsap.from(bioStinger, {
+        opacity: 0,
+        y: 54,
+        scale: 0.96,
+        duration: 1.0,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: bioStinger,
+          start: "top 88%",
+          once: true,
+        },
+      });
+    }
+    if (bioCopy) {
+      gsap.from(bioCopy.querySelectorAll("p, .bio__exp li"), {
+        opacity: 0,
+        y: 24,
+        duration: 0.8,
+        ease: "expo.out",
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: bioCopy,
+          start: "top 78%",
+          once: true,
+        },
+      });
+    }
+
+    const finalCta = document.querySelector(".final-cta__inner");
+    if (finalCta) {
+      gsap.from(finalCta.querySelectorAll(".final-cta__num, .final-cta__sub, .final-cta__btns"), {
+        opacity: 0,
+        y: 30,
+        duration: 0.9,
+        ease: "expo.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: finalCta,
+          start: "top 78%",
+          once: true,
+        },
       });
     }
   }
