@@ -2,8 +2,13 @@
   const reduced = window.EBM.reducedMotion;
   const isMobile = window.EBM.isMobile;
 
-  /* ===== Hero bg parallax ===== */
-  if (!reduced) {
+  /* ===== Hero bg parallax (solo desktop) =====
+     Su mobile la disattivo: il velo (gradient di fusione foto→cream)
+     è absolute dentro .hero__bg ma NON è coinvolto nella trasformazione
+     GSAP applicata all'<img>. Lasciandola attiva, l'immagine slitta di
+     yPercent al variare dello scroll mentre il velo resta fisso,
+     creando un gap visibile crescente al bordo inferiore della foto. */
+  if (!reduced && !isMobile) {
     const heroImg = document.querySelector(".hero__bg img");
     if (heroImg) {
       gsap.to(heroImg, {
@@ -16,6 +21,46 @@
           end: "bottom top",
           scrub: 1.0,
         },
+      });
+    }
+  }
+
+  /* ===== Hero text drift (solo mobile) =====
+     Parallax tied-to-scroll: tutto il blocco testo sale insieme
+     mentre la hero esce. Niente stagger — gli elementi si muovono
+     uniformemente per mantenere intatte le spaziature e non far
+     sovrapporre la eyebrow con il bottone.
+
+     In parallelo, la .hero stessa riduce il proprio spazio nel
+     flusso (marginBottom negativo): la sezione successiva
+     (.manifesto) viene tirata su della stessa quantità del drift,
+     così sotto il testo che sale non resta un'ampia fascia cream
+     vuota — è il contenuto del manifesto a colmare visivamente
+     lo spazio in tempo reale, sincronizzato allo scroll. */
+  if (!reduced && isMobile) {
+    const heroInner = document.querySelector(".hero__inner");
+    const heroSection = document.querySelector(".hero");
+    if (heroInner && heroSection) {
+      const drift = 160;
+      const trigger = {
+        trigger: ".hero",
+        start: "top top",
+        end: "40% top",
+        scrub: 1.0,
+      };
+      gsap.to(heroInner, {
+        y: -drift,
+        /* Niente opacity: con un fade attivo, il bg cream del
+           blocco testo diventava semi-trasparente durante lo scroll
+           e lasciava intravedere la foto sottostante, creando
+           proprio quel "taglio orizzontale" sulla foto. */
+        ease: "none",
+        scrollTrigger: trigger,
+      });
+      gsap.to(heroSection, {
+        marginBottom: -drift,
+        ease: "none",
+        scrollTrigger: trigger,
       });
     }
   }

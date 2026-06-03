@@ -32,10 +32,10 @@
 /* Object-position pensato per le foto verticali emiX.jpg: tengo
    il soggetto nella metà alta del frame quando il cover ritaglia. */
 @media (max-width: 720px) {
-  .hero__bg picture img,
   .journal-hero__bg picture img,
   .final-cta__bg picture img { object-position: 50% 25%; }
 }
+
 
 /* ============================================================
    TIER 1 — ≤ 720px : layout mobile principale
@@ -96,41 +96,174 @@
   .journal-hero__cue { display: none !important; }
 
   /* ============================================================
-     HOME — Hero
+     HOME — Hero (mobile redesign v2)
+     • Foto in alto, fascia ariosa sotto per la tipografia
+     • Transizione fluida senza seam: la fascia foto sfuma in cream
+       e il blocco testo risale dentro la coda del gradiente
+     • Gerarchia: H1 → H1 → descrizione → eyebrow → CTA → link
+     • Titoli unificati in olive-sage (stesso token del CTA)
      ============================================================ */
+  /* UNIFICAZIONE BG SU MOBILE — tutto cream (#F5F0E8).
+     Causa del bug: body/manifesto/testimonials usano --warm-white
+     (#FAF8F4), mentre hero e gradient usano --cream (#F5F0E8). La
+     differenza è minima ma sufficiente a creare una linea visibile
+     quando il parallax fa scivolare il blocco testo (cream) sopra
+     la foto e contemporaneamente il manifesto (warm-white) sale di
+     -160px coprendo la fine della hero. Allineando tutto a cream
+     spariscono i confini orizzontali. */
+  body { background: var(--cream); }
+  .manifesto,
+  .testimonials { background: var(--cream); }
+
   .hero {
-    min-height: 100svh;
-    min-height: 100dvh;
-    padding-top: calc(var(--nav-h) + 28px);
-    padding-bottom: 56px;
-  }
-  .hero__bg img { transform: scale(1.02); }
-  .hero__eyebrow {
-    color: var(--olive-mid);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(245, 240, 232, 0.35);
-  }
-  .hero__title {
-    margin-top: 20px;
-    font-size: clamp(2.8rem, 14vw, 4.2rem);
-    max-width: 12ch;
-    line-height: 0.98;
-    letter-spacing: -0.035em;
-  }
-  .hero__sub {
-    margin-top: 20px;
-    font-size: 0.98rem;
-    line-height: 1.55;
-    max-width: 38ch;
-  }
-  .hero__row {
-    margin-top: 28px;
-    gap: 18px;
+    min-height: auto;
+    padding: 0;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  /* Fascia foto: alta abbastanza per essere protagonista; lo sfumato
+     finale è in cream pieno, così non c'è linea di taglio. */
+  .hero__bg {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 62vh;
+    height: 62svh;
+    flex: 0 0 auto;
+    z-index: 0;
+    margin-bottom: 0;
+    /* Cream bg anche sul container foto: se il velo non coprisse
+       tutto, dietro c'è comunque cream uniforme. */
+    background: var(--cream);
+  }
+  .hero__bg picture,
+  .hero__bg picture img,
+  .hero__bg img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+    /* !important neutralizza eventuali transform inline lasciati da
+       GSAP se l'utente ridimensiona da desktop a mobile durante la
+       sessione: il velo è ancorato a .hero__bg, l'immagine deve
+       restare allineata al velo, niente parallax su mobile. */
+    transform: none !important;
+    will-change: auto;
+  }
+  /* Velatura più leggera: minima ombra in alto per la nav (non
+     pesa più sulla foto), fascia centrale completamente libera
+     così il soggetto è ben visibile, fade-in cream solo nell'ultimo
+     terzo — termina in cream pieno per sigillare il bordo. */
+  .hero__bg-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(28,28,26,0.22) 0%,
+      rgba(28,28,26,0.00) 16%,
+      rgba(245,240,232,0.00) 68%,
+      rgba(245,240,232,0.55) 88%,
+      var(--cream) 100%);
+    pointer-events: none;
+  }
+
+  /* Blocco testo: risale dentro la coda del gradiente con margin-top
+     negativo + secondo gradiente locale che inizia trasparente e
+     diventa cream pieno. Risultato: nessun seam orizzontale. */
+  .hero__inner {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    margin-top: -90px;
+    padding: 110px 24px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    color: var(--charcoal);
+    /* Gradient di overlap col velo della foto: parte transparent e
+       arriva a cream pieno entro il 55% della propria altezza, così
+       sotto il blocco testo è sempre cream solido. Nessun half-tone
+       cream che, traslando sopra zone scure della foto, possa
+       generare bordi visibili. */
+    background: linear-gradient(180deg,
+      rgba(245,240,232,0.00) 0%,
+      rgba(245,240,232,0.55) 22%,
+      rgba(245,240,232,0.92) 42%,
+      var(--cream) 55%,
+      var(--cream) 100%);
+  }
+
+  /* Titoli "Allenati" e "Ascoltandoti." in olive unificato. */
+  .hero__title {
+    margin: 0 auto;
+    color: var(--olive);
+    font-size: clamp(2.6rem, 13vw, 3.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    max-width: none;
+    text-align: center;
+  }
+  .hero__title em {
+    color: var(--olive);
+    font-style: italic;
+  }
+
+  .hero__sub {
+    margin: 10px auto 0;
+    color: var(--charcoal-mid);
+    font-size: 0.96rem;
+    line-height: 1.55;
+    max-width: 30ch;
+    text-align: center;
+  }
+
+  /* Eyebrow originale: riposizionata via flex order tra descrizione
+     e CTA. Sottile, uppercase, olive — ancora informativa prima
+     dell'azione. Reset dei vecchi stili desktop (gradient/bullet). */
+  .hero__inner > .hero__eyebrow {
+    display: inline-block;
+    order: 4;
+    margin: 28px auto 14px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--olive);
+    font-family: var(--ff-body);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    text-shadow: none;
+    opacity: 0.85;
+  }
+
+  /* Ordine flex per riposizionare la eyebrow senza toccare il DOM. */
+  .hero__title  { order: 1; }
+  .hero__sub    { order: 2; }
+  .hero__row    { order: 5; }
+
+  .hero__row {
+    margin: 0 auto;
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
   }
   .hero__row .btn { width: 100%; justify-content: center; }
-  .hero__row .link-underline { padding-bottom: 4px; }
+  .hero__row .link-underline {
+    color: var(--charcoal);
+    padding-bottom: 4px;
+  }
+  .hero__row .link-underline::after { background: var(--olive); }
 
   /* ============================================================
      HOME — Manifesto + pillars come carousel
@@ -637,9 +770,15 @@
   .container-narrow,
   .nav__inner { padding-inline: 16px; }
 
-  .hero { padding-bottom: 48px; }
-  .hero__title { font-size: clamp(2.6rem, 14vw, 3.6rem); }
-  .hero__sub { font-size: 0.95rem; }
+  .hero__inner { padding: 100px 20px 40px; margin-top: -80px; }
+  .hero__bg { height: 58vh; height: 58svh; }
+  .hero__title { font-size: clamp(2.4rem, 13.5vw, 3.2rem); }
+  .hero__sub { font-size: 0.94rem; max-width: 28ch; }
+  .hero__inner > .hero__eyebrow {
+    font-size: 0.58rem;
+    letter-spacing: 0.26em;
+    margin: 24px auto 12px;
+  }
 
   /* Splash su iPhone SE-class */
   .splash__word { font-size: clamp(1.9rem, 14vw, 2.6rem); }
@@ -691,7 +830,38 @@
    Solo aggiustamento hero per evitare overlap col scrollcue
    ============================================================ */
 @media (max-width: 900px) and (max-height: 480px) and (orientation: landscape) {
-  .hero,
+  .hero {
+    min-height: 100svh;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .hero__bg {
+    width: 42%;
+    height: auto;
+    align-self: stretch;
+  }
+  .hero__inner {
+    flex: 1 1 auto;
+    margin-top: 0;
+    padding: 20px 24px;
+    background: var(--cream);
+    text-align: left;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .hero__inner > .hero__eyebrow {
+    margin: 14px 0 8px;
+    order: 4;
+  }
+  .hero__row {
+    margin-top: 0;
+    flex-direction: row;
+    align-items: center;
+    max-width: none;
+    order: 5;
+  }
+  .hero__row .btn { width: auto; }
+
   .eventi-hero,
   .journal-hero,
   .evento-hero {
@@ -706,8 +876,6 @@
   .hero__sub,
   .eventi-hero__lead,
   .journal-hero__sub { margin-top: 12px; }
-  .hero__row { margin-top: 18px; flex-direction: row; }
-  .hero__row .btn { width: auto; }
   .splash__word { font-size: clamp(1.8rem, 9vw, 3rem); }
 }
 
