@@ -104,6 +104,10 @@
     padding-bottom: 56px;
   }
   .hero__bg img { transform: scale(1.02); }
+  .hero__eyebrow {
+    color: var(--charcoal);
+    font-weight: 600;
+  }
   .hero__title {
     margin-top: 20px;
     font-size: clamp(2.8rem, 14vw, 4.2rem);

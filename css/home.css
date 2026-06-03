@@ -226,6 +226,7 @@
 }
 
 .bio__copy { padding-top: clamp(20px, 4vh, 40px); }
+.bio__copy h2 { font-size: clamp(2rem, 4.2vw, 3.6rem); }
 .bio__copy p { max-width: 50ch; color: var(--charcoal-mid); line-height: 1.7; }
 .bio__exp {
   margin-top: clamp(36px, 5vh, 56px);

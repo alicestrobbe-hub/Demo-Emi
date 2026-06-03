@@ -252,3 +252,26 @@ section {
     scroll-behavior: auto !important;
   }
 }
+
+/* ========== Fix text-clipping (italic + discendenti) ========== */
+h1, h2, h3, h4, h5,
+.serif-italic,
+.eyebrow {
+  padding-left: 0.06em;
+  padding-bottom: 0.12em;
+  overflow: visible;
+}
+
+[data-reveal="lines"] .line-wrap {
+  overflow: visible;
+  clip-path: inset(-0.15em -0.2em);
+  padding-bottom: 0.12em;
+}
+
+h1 { line-height: 1.04; }
+h2 { line-height: 1.08; }
+
+h1 em, h2 em, h3 em, h4 em {
+  padding-inline: 0.04em;
+  margin-inline: -0.04em;
+}
