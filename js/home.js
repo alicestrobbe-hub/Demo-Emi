@@ -96,16 +96,41 @@
       });
     }
     if (pillars.length) {
-      gsap.set(pillars, { opacity: 0, y: 42 });
+      gsap.set(pillars, { opacity: 0, y: 46, clipPath: "inset(0 0 100% 0)" });
+      gsap.set(".pillar__n", { opacity: 0, y: 28 });
+      gsap.set(".pillar h4, .pillar p", { opacity: 0, y: 22 });
       ScrollTrigger.batch(pillars, {
         start: "top 86%",
-        onEnter: (els) => gsap.to(els, {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "expo.out",
-          stagger: 0.12,
-        }),
+        onEnter: (els) => {
+          els.forEach((el, index) => {
+            const tl = gsap.timeline({ delay: index * 0.12 });
+            tl.to(el, {
+              opacity: 1,
+              y: 0,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 0.9,
+              ease: "expo.out",
+            })
+            .fromTo(el, { "--pillar-line": 0 }, {
+              "--pillar-line": 1,
+              duration: 0.85,
+              ease: "power3.out",
+            }, "-=0.72")
+            .to(el.querySelector(".pillar__n"), {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "expo.out",
+            }, "-=0.72")
+            .to(el.querySelectorAll("h4, p"), {
+              opacity: 1,
+              y: 0,
+              duration: 0.72,
+              ease: "expo.out",
+              stagger: 0.08,
+            }, "-=0.55");
+          });
+        },
         once: true,
       });
     }
