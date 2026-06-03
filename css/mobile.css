@@ -99,7 +99,8 @@
      HOME — Hero
      ============================================================ */
   .hero {
-    min-height: 92svh;
+    min-height: 100svh;
+    min-height: 100dvh;
     padding-top: calc(var(--nav-h) + 28px);
     padding-bottom: 56px;
   }
@@ -306,7 +307,8 @@
      EVENTI hub — hero + flow
      ============================================================ */
   .eventi-hero {
-    min-height: 86svh;
+    min-height: 100svh;
+    min-height: 100dvh;
     padding-top: calc(var(--nav-h) + 24px);
     padding-bottom: 56px;
   }
@@ -464,7 +466,8 @@
      JOURNAL — Hero + magazine + newsletter
      ============================================================ */
   .journal-hero {
-    min-height: 84svh;
+    min-height: 100svh;
+    min-height: 100dvh;
     padding-top: calc(var(--nav-h) + 24px);
     padding-bottom: 56px;
   }
