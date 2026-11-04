@@ -85,6 +85,30 @@ textarea.contatti__input {
 .contatti__tile:hover h4, .contatti__tile:hover p,
 .contatti__tile.is-selected h4, .contatti__tile.is-selected p { color: var(--cream); }
 
+.contatti__input + .contatti__input { margin-top: 12px; }
+.contatti__tiles--3 { grid-template-columns: repeat(3, 1fr); }
+.contatti__phone { margin-top: 24px; }
+
+.contatti__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 28px;
+  font-size: 0.95rem;
+  color: var(--charcoal-mid);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.contatti__privacy input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--olive); flex-shrink: 0; }
+.contatti__privacy a { text-decoration: underline; text-underline-offset: 3px; }
+
+.contatti__trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.contatti__error { margin-top: 16px; min-height: 1.4em; color: var(--terra-dark); font-size: 0.95rem; }
+.contatti__error:empty { min-height: 0; margin-top: 0; }
+
+.btn[aria-busy="true"] { opacity: 0.6; pointer-events: none; }
+
 .contatti__actions {
   margin-top: clamp(40px, 6vh, 64px);
   display: flex;

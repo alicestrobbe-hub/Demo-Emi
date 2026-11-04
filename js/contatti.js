@@ -7,6 +7,11 @@
   const steps = Array.from(form.querySelectorAll(".contatti__step"));
   const stepCurrent = document.getElementById("stepCurrent");
   const nomeInput = document.getElementById("nomeInput");
+  const cognomeInput = document.getElementById("cognomeInput");
+  const telefonoInput = document.getElementById("telefonoInput");
+  const emailInput = document.getElementById("emailInput");
+  const privacyInput = document.getElementById("privacyInput");
+  const submitBtn = form.querySelector('button[type="submit"]');
   const greetName = document.getElementById("greetName");
   const messaggioInput = document.getElementById("messaggioInput");
   const cercoField = document.getElementById("cercoField");
@@ -14,7 +19,9 @@
   const pkgField = document.getElementById("pkgField");
   const successPanel = document.getElementById("successPanel");
   const successName = document.getElementById("successName");
-  const tiles = Array.from(form.querySelectorAll(".contatti__tile"));
+  const tiles = Array.from(form.querySelectorAll(".contatti__tile[data-tile]"));
+  const prefTiles = Array.from(form.querySelectorAll(".contatti__tile[data-pref]"));
+  let pref = "";
 
   /* Pre-fill from query string (?evento=catamarano | ?pkg=primo-passo) */
   const params = new URLSearchParams(location.search);
@@ -30,6 +37,11 @@
   }
 
   let current = 0;
+
+  function setError(step, text) {
+    const el = form.querySelector(`[data-error="${step}"]`);
+    if (el) el.textContent = text || "";
+  }
 
   function pad(n) { return String(n).padStart(2, "0"); }
 
@@ -70,6 +82,7 @@
     if (stepNum === "1") {
       const name = nomeInput.value.trim();
       if (!name) { nomeInput.focus(); return false; }
+      if (!cognomeInput.value.trim()) { cognomeInput.focus(); return false; }
       greetName.textContent = `Ciao ${name},`;
       successName.textContent = `Grazie, ${name}.`;
       return true;
@@ -84,9 +97,28 @@
     }
     if (stepNum === "3") return true;
     if (stepNum === "4") {
-      const email = document.getElementById("emailInput").value.trim();
-      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!ok) { document.getElementById("emailInput").focus(); return false; }
+      if (!pref) {
+        setError(4, "Scegli come preferisci che ti ricontatti.");
+        if (prefTiles[0]) prefTiles[0].focus();
+        return false;
+      }
+      if (pref !== "email" && !/^[+0-9 ()./-]{6,40}$/.test(telefonoInput.value.trim())) {
+        setError(4, "Scrivi un numero di telefono valido.");
+        telefonoInput.focus();
+        return false;
+      }
+      setError(4, "");
+      return true;
+    }
+    if (stepNum === "5") {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+      if (!ok) { emailInput.focus(); return false; }
+      if (!privacyInput.checked) {
+        setError(5, "Per mandare il messaggio serve la spunta sull'informativa privacy.");
+        privacyInput.focus();
+        return false;
+      }
+      setError(5, "");
       return true;
     }
     return true;
@@ -113,8 +145,24 @@
     });
   });
 
+  prefTiles.forEach((tile) => {
+    tile.addEventListener("click", () => {
+      prefTiles.forEach((t) => {
+        t.classList.remove("is-selected");
+        t.setAttribute("aria-checked", "false");
+      });
+      tile.classList.add("is-selected");
+      tile.setAttribute("aria-checked", "true");
+      pref = tile.dataset.pref;
+      telefonoInput.hidden = pref === "email";
+      telefonoInput.required = pref !== "email";
+      setError(4, "");
+      if (!telefonoInput.hidden) telefonoInput.focus({ preventScroll: true });
+    });
+  });
+
   /* Enter to advance on text inputs */
-  [nomeInput, document.getElementById("emailInput")].forEach((inp) => {
+  [nomeInput, cognomeInput, telefonoInput, emailInput].forEach((inp) => {
     if (!inp) return;
     inp.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
@@ -126,12 +174,7 @@
     });
   });
 
-  /* Submit */
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!validateStep()) return;
-
-    /* Hide form, show success */
+  function showSuccess() {
     if (reduced) {
       form.style.display = "none";
       successPanel.classList.add("is-active");
@@ -149,16 +192,34 @@
         gsap.fromTo(successPanel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
       },
     });
+  }
 
-    /* Real submit (fire-and-forget if Formspree endpoint configured) */
-    const action = form.getAttribute("action");
-    if (action && !action.includes("placeholder")) {
-      fetch(action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
-      }).catch(() => {});
-    }
+  /* Submit: la richiesta va nel gestionale di Emi (Contatti), tramite js/gestionale-form.js */
+  let sending = false;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (sending || !validateStep()) return;
+    sending = true;
+    submitBtn.setAttribute("aria-busy", "true");
+    setError(5, "");
+
+    // l'invio vero sta in js/gestionale-form.js: non riscriverlo qui
+    const result = await window.EmiGestionale.sendLead({
+      firstName: nomeInput.value.trim(),
+      lastName: cognomeInput.value.trim(),
+      email: emailInput.value.trim(),
+      phone: telefonoInput.value.trim(),
+      contactPreference: pref,
+      cerco: cercoField.value,
+      evento: eventoField.value,
+      percorso: pkgField.value,
+      message: messaggioInput.value,
+      honeypot: form.elements.website.value,
+    });
+    sending = false;
+    submitBtn.removeAttribute("aria-busy");
+    if (result.ok) showSuccess();
+    else setError(5, result.error);
   });
 
 })();

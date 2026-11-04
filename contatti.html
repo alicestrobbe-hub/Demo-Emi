@@ -58,10 +58,16 @@
 
       <div class="contatti__form-wrap">
         <div class="contatti__step-counter" aria-hidden="true">
-          <span id="stepCurrent">01</span> <span>/ 04</span>
+          <span id="stepCurrent">01</span> <span>/ 05</span>
         </div>
 
-        <form id="contattiForm" action="https://formspree.io/f/placeholder" method="POST" novalidate>
+        <!--
+          ⚠️ Questo form manda le richieste al gestionale di Emi (js/gestionale-form.js).
+          La grafica si può rifare, ma devono restare: nome, cognome, email, preferenza di contatto
+          (whatsapp / telefono / email), telefono se non è email, messaggio, la casella privacy
+          e il campo trappola "website". Regole in GESTIONALE.md.
+        -->
+        <form id="contattiForm" novalidate>
           <input type="hidden" name="cerco" id="cercoField" />
           <input type="hidden" name="evento" id="eventoField" />
           <input type="hidden" name="pkg" id="pkgField" />
@@ -69,7 +75,8 @@
           <!-- Step 1: Nome -->
           <div class="contatti__step is-active" data-step="1">
             <h2 class="contatti__question">Ciao,<br><em>come ti chiami?</em></h2>
-            <input type="text" name="nome" id="nomeInput" class="contatti__input" placeholder="Il tuo nome" autocomplete="given-name" required aria-label="Nome" />
+            <input type="text" name="nome" id="nomeInput" class="contatti__input" placeholder="Il tuo nome" autocomplete="given-name" maxlength="80" required aria-label="Nome" />
+            <input type="text" name="cognome" id="cognomeInput" class="contatti__input" placeholder="Il tuo cognome" autocomplete="family-name" maxlength="80" required aria-label="Cognome" />
             <div class="contatti__actions">
               <button type="button" class="btn btn-primary" data-next data-cursor="AVANTI">Continua</button>
               <button type="button" class="contatti__back" data-back disabled>← indietro</button>
@@ -113,10 +120,44 @@
             </div>
           </div>
 
-          <!-- Step 4: Email -->
+          <!-- Step 4: Come ti ricontatto -->
           <div class="contatti__step" data-step="4">
+            <h2 class="contatti__question">Come preferisci<br><em>che ti ricontatti?</em></h2>
+            <div class="contatti__tiles contatti__tiles--3" role="radiogroup" aria-label="Come preferisci essere ricontattata">
+              <button type="button" class="contatti__tile" data-pref="whatsapp" role="radio" aria-checked="false">
+                <h4>WhatsApp</h4>
+                <p>Ti scrivo un messaggio.</p>
+              </button>
+              <button type="button" class="contatti__tile" data-pref="telefono" role="radio" aria-checked="false">
+                <h4>Telefono</h4>
+                <p>Ti chiamo io.</p>
+              </button>
+              <button type="button" class="contatti__tile" data-pref="email" role="radio" aria-checked="false">
+                <h4>Email</h4>
+                <p>Ti rispondo per iscritto.</p>
+              </button>
+            </div>
+            <input type="tel" name="telefono" id="telefonoInput" class="contatti__input contatti__phone" placeholder="Il tuo numero" autocomplete="tel" maxlength="40" aria-label="Telefono" hidden />
+            <p class="contatti__error" data-error="4" role="alert"></p>
+            <div class="contatti__actions">
+              <button type="button" class="btn btn-primary" data-next data-cursor="AVANTI">Continua</button>
+              <button type="button" class="contatti__back" data-back>← indietro</button>
+            </div>
+          </div>
+
+          <!-- Step 5: Email -->
+          <div class="contatti__step" data-step="5">
             <h2 class="contatti__question">Dove ti rispondo?<br><em>La tua email.</em></h2>
-            <input type="email" name="email" id="emailInput" class="contatti__input" placeholder="nome@email.com" autocomplete="email" required aria-label="Email" />
+            <input type="email" name="email" id="emailInput" class="contatti__input" placeholder="nome@email.com" autocomplete="email" maxlength="200" required aria-label="Email" />
+            <label class="contatti__privacy">
+              <input type="checkbox" id="privacyInput" required />
+              <span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a>.</span>
+            </label>
+            <!-- trappola per i bot: nascosta alle persone, da non togliere -->
+            <div class="contatti__trap" aria-hidden="true">
+              <label>Lascia vuoto <input name="website" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <p class="contatti__error" data-error="5" role="alert"></p>
             <div class="contatti__actions">
               <button type="submit" class="btn btn-primary" data-cursor="INVIA">Manda il messaggio</button>
               <button type="button" class="contatti__back" data-back>← indietro</button>
@@ -208,6 +249,8 @@
 <script src="js/lenis-init.js" defer></script>
 <script src="js/reveal.js" defer></script>
 <script src="js/chrome.js" defer></script>
+<!-- ⚠️ gestionale-form.js manda le richieste al gestionale di Emi: non toglierlo, non modificarlo (vedi GESTIONALE.md) -->
+<script src="js/gestionale-form.js" defer></script>
 <script src="js/contatti.js" defer></script>
 
 </body>
