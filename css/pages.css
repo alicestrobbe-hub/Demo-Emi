@@ -256,3 +256,27 @@
   .meet__arch { inset: -16px -16px 16px 16px; }
   .meet .vid__frame { width: min(calc(100vw - 2 * var(--gutter) - 44px), 460px); }
 }
+
+/* ---------- Inquadrature foto (object-position) ---------- */
+.frame-left img { object-position: 18% 50%; }
+.frame-up img { object-position: 50% 22%; }
+/* foto verticale già mostrata per intero in larghezza: piccolo zoom verso destra */
+.frame-right img { transform: scale(1.16); transform-origin: 92% 62%; }
+
+/* ---------- Banner con scritta (metodo) ---------- */
+.banner--split { height: clamp(440px, 76vh, 780px); }
+.banner--split::after {
+  background:
+    linear-gradient(to left, rgba(20, 22, 15, 0.62) 0%, rgba(20, 22, 15, 0.12) 55%, rgba(20, 22, 15, 0) 75%),
+    linear-gradient(to top, rgba(20, 22, 15, 0.45), rgba(20, 22, 15, 0) 45%);
+}
+.banner__split {
+  display: flex; flex-direction: column-reverse; gap: 20px;
+  padding-bottom: clamp(36px, 6vw, 80px);
+}
+.banner__claim { font-size: var(--fs-h2); max-width: 13ch; }
+.banner__caption { opacity: 0.9; }
+@media (min-width: 900px) {
+  .banner__split { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+  .banner__claim { text-align: right; }
+}
