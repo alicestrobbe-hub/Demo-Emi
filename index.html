@@ -176,32 +176,54 @@
   </section>
 
   <!-- VIDEO DI EMI -->
-  <section class="section bg-muschio" aria-labelledby="video-title">
-    <div class="container split">
-      <div class="flow" data-reveal>
+  <section class="meet bg-muschio" aria-labelledby="video-title">
+    <div class="container meet__grid">
+      <div class="meet__text" data-reveal>
         <p class="eyebrow">Conosci Emi</p>
-        <h2 id="video-title">Ciao, sono <em>Emi</em>.</h2>
-        <div class="prose">
-          <!-- TESTO PROVVISORIO (ripreso dal video) -->
-          <p class="lead">Ti sei mai sentita a disagio in palestra? Emi Body Movement nasce proprio per te.</p>
-          <p class="muted">Un posto dove allenarsi senza pregiudizi, dove ognuna è seguita da vicino e dove, lezione dopo lezione, nascono nuove amicizie. Te lo racconto in trenta secondi.</p>
-        </div>
+        <h2 id="video-title" class="meet__title">Ciao, sono <em>Emi</em>.</h2>
+        <!-- TESTO PROVVISORIO (ripreso dal video) -->
+        <p class="meet__quote">«Ti sei mai sentita a disagio in palestra? Emi Body Movement nasce proprio per te.»</p>
+        <ol class="meet__points">
+          <li>
+            <span class="meet__num">01</span>
+            <div><h3>Senza pregiudizi</h3><p>Un posto dove allenarti senza sentirti osservata, al tuo ritmo.</p></div>
+          </li>
+          <li>
+            <span class="meet__num">02</span>
+            <div><h3>Seguita da vicino</h3><p>Al massimo in cinque: ho il tempo di guardare, correggere e spiegare a ognuna.</p></div>
+          </li>
+          <li>
+            <span class="meet__num">03</span>
+            <div><h3>Nuove amicizie</h3><p>Lezione dopo lezione il gruppo diventa un posto dove stare bene.</p></div>
+          </li>
+        </ol>
         <div class="btn-row">
           <a class="btn btn--light" href="metodo.html#storia">Leggi la mia storia</a>
+          <a class="btn btn--ghost" href="https://wa.me/?text=Ciao%20Emi%2C%20vorrei%20prenotare%20una%20prova%20gratuita!" data-wa target="_blank" rel="noopener">Prenota una prova</a>
         </div>
       </div>
-      <div class="vid" data-video data-reveal>
-        <div class="vid__frame">
-          <video muted loop playsinline preload="none" poster="assets/img/emi-video-poster.webp" data-src="assets/video/emi-si-racconta.mp4" width="720" height="1280" aria-label="Emi racconta perché è nato Emi Body Movement (video con sottotitoli)"></video>
-          <div class="vid__controls">
-            <button type="button" class="vid__btn" data-video-play aria-pressed="false" aria-label="Metti in pausa il video">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path class="when-off" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="when-on" d="M8 5v14l11-7z"/></svg>
-            </button>
-            <button type="button" class="vid__btn" data-video-sound aria-pressed="false" aria-label="Attiva l'audio">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="when-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="when-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
-              <span class="when-off">Attiva audio</span><span class="when-on">Audio attivo</span>
-            </button>
+
+      <div class="meet__media" data-reveal>
+        <div class="vid" data-video>
+          <span class="meet__arch" aria-hidden="true"></span>
+          <div class="vid__frame">
+            <video muted loop playsinline preload="none" poster="assets/img/emi-video-poster.webp" data-src="assets/video/emi-si-racconta.mp4" width="720" height="1280" aria-label="Emi racconta perché è nato Emi Body Movement (video con sottotitoli)"></video>
+            <div class="vid__controls">
+              <button type="button" class="vid__btn" data-video-play aria-pressed="false" aria-label="Metti in pausa il video">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path class="when-off" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="when-on" d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button type="button" class="vid__btn" data-video-sound aria-pressed="false" aria-label="Attiva l'audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="when-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="when-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+                <span class="when-off">Attiva audio</span><span class="when-on">Audio attivo</span>
+              </button>
+            </div>
           </div>
+          <svg class="meet__badge" viewBox="0 0 120 120" aria-hidden="true">
+            <defs><path id="meet-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <circle cx="60" cy="60" r="59" fill="var(--sole)"/>
+            <text font-size="12" letter-spacing="3.4" fill="var(--inchiostro)" font-family="Instrument Sans, sans-serif" font-weight="600"><textPath href="#meet-circle">ALLENATI ASCOLTANDOTI •</textPath></text>
+            <text x="60" y="69" text-anchor="middle" font-size="26" font-style="italic" font-family="Instrument Serif, serif" fill="var(--inchiostro)">emi</text>
+          </svg>
         </div>
       </div>
     </div>
