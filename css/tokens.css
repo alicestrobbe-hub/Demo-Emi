@@ -1,44 +1,76 @@
+/* =====================================================================
+   EMI BODY MOVEMENT — DESIGN TOKENS
+   ---------------------------------------------------------------------
+   ⚠️ COLORI E FONT PROVVISORI: quando arriva la brand identity della
+   designer basta cambiare i valori in questo file (sezioni 1 e 2).
+   Il resto del CSS usa solo queste variabili.
+   ===================================================================== */
+
 :root {
-  /* Palette EBM (da CLAUDE.md §6) — invariata */
-  --olive: #4A5430;
-  --olive-mid: #5C6A3C;
-  --sage: #6B7A47;
-  --sage-light: #8A9A5C;
-  --olive-pale: #D4D9C0;
-  --olive-faint: #ECEEE4;
-  --cream: #F5F0E8;
-  --sand: #E8E0D0;
-  --warm-white: #FAF8F4;
-  --terra: #C4917A;
-  --terra-dark: #A67A63;
-  --charcoal: #1C1C1A;
-  --charcoal-mid: #2E2E2C;
-  --muted: #6B6558;
+  /* ---------- 1. PALETTE (provvisoria) ---------- */
+  --muschio: #4A5430;          /* verde principale, da tenere */
+  --muschio-scuro: #2F3622;
+  --crema: #F6F1E7;            /* sfondo base */
+  --sabbia: #E9DFCF;
+  --terracotta: #C9785A;       /* arancione morbido */
+  --terracotta-soft: #F1D9CC;
+  --azzurro: #7FA8B5;          /* blu-turchese polveroso */
+  --azzurro-soft: #DCE9EC;
+  --sole: #E9C46A;             /* giallo */
+  --sole-soft: #F7EBC8;
+  --inchiostro: #1E1F1A;       /* testo */
 
-  /* Tipografia — schema reference Kasia Siwosz:
-     sans grottesco editoriale + serif italica per accenti */
-  --ff-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-  --ff-body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-  --ff-accent: "Instrument Serif", "Times New Roman", serif;
+  /* ruoli: usare questi nei componenti */
+  --bg: var(--crema);
+  --bg-alt: var(--sabbia);
+  --text: var(--inchiostro);
+  --text-soft: #4D4E45;        /* testo secondario su chiaro (contrasto ≥ 7:1 su crema) */
+  --line: rgba(30, 31, 26, 0.14);
+  --accent: var(--muschio);
+  --accent-strong: var(--muschio-scuro);
+  --on-accent: var(--crema);   /* testo su muschio */
+  --on-color: var(--inchiostro); /* testo su terracotta, azzurro, sole: sempre scuro */
 
-  --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-anticipate: cubic-bezier(0.76, 0, 0.24, 1);
+  /* ---------- 2. FONT (provvisori) ---------- */
+  --ff-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;   /* titoli */
+  --ff-sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;   /* testi, menu, bottoni */
 
-  --max-w: 1180px;
-  --max-w-narrow: 820px;
-  --pad: clamp(20px, 5vw, 60px);
+  /* scala tipografica fluida (mobile → desktop) */
+  --fs-hero: clamp(3.4rem, 1.6rem + 8vw, 8.5rem);
+  --fs-h1: clamp(3rem, 1.7rem + 5.6vw, 6.5rem);
+  --fs-h2: clamp(2.4rem, 1.5rem + 3.6vw, 4.75rem);
+  --fs-h3: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem);
+  --fs-lead: clamp(1.15rem, 1.05rem + 0.45vw, 1.4rem);
+  --fs-body: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);  /* 17 → 18 px */
+  --fs-small: 0.9375rem;
+  --fs-eyebrow: 0.8125rem;
+  --lh-title: 1.02;
+  --lh-body: 1.6;
+
+  /* ---------- 3. FORME ---------- */
+  --r-card: 28px;                         /* card e foto dentro le sezioni */
+  --r-sm: 14px;
+  --r-pill: 999px;                        /* bottoni */
+  --r-arch: 999px 999px 28px 28px;        /* foto di Emi con la cima ad arco */
+  --r-none: 0;                            /* foto a tutta larghezza: niente angoli */
+
+  /* ---------- 4. SPAZI E LAYOUT ---------- */
+  --max-w: 1280px;
+  --max-w-text: 680px;
+  --gutter: clamp(16px, 4.5vw, 56px);
+  --space-section: clamp(80px, 6rem + 4vw, 168px);
+  --space-block: clamp(40px, 2rem + 3vw, 80px);
+  --gap: clamp(16px, 1rem + 1vw, 32px);
   --nav-h: 72px;
 
-  --r-img: 2px;
-  --r-card: 4px;
-  --r-form: 6px;
-  --r-pill: 999px;
+  /* ---------- 5. MOVIMENTO ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 220ms;
+  --t-med: 420ms;
 
-  --shadow-soft: 0 20px 60px -20px rgba(28, 28, 26, 0.18);
-  --shadow-card: 0 8px 32px -12px rgba(28, 28, 26, 0.10);
+  --shadow-soft: 0 24px 60px -28px rgba(30, 31, 26, 0.28);
+}
 
-  --t-micro: 200ms;
-  --t-fast: 320ms;
-  --t-reveal: 900ms;
-  --t-scrub: 1200ms;
+@media (min-width: 1024px) {
+  :root { --nav-h: 84px; }
 }

@@ -1,225 +1,110 @@
-(function contatti() {
-  const reduced = window.EBM.reducedMotion;
-
-  const form = document.getElementById("contattiForm");
-  if (!form) return;
-
-  const steps = Array.from(form.querySelectorAll(".contatti__step"));
-  const stepCurrent = document.getElementById("stepCurrent");
-  const nomeInput = document.getElementById("nomeInput");
-  const cognomeInput = document.getElementById("cognomeInput");
-  const telefonoInput = document.getElementById("telefonoInput");
-  const emailInput = document.getElementById("emailInput");
-  const privacyInput = document.getElementById("privacyInput");
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const greetName = document.getElementById("greetName");
-  const messaggioInput = document.getElementById("messaggioInput");
-  const cercoField = document.getElementById("cercoField");
-  const eventoField = document.getElementById("eventoField");
-  const pkgField = document.getElementById("pkgField");
-  const successPanel = document.getElementById("successPanel");
-  const successName = document.getElementById("successName");
-  const tiles = Array.from(form.querySelectorAll(".contatti__tile[data-tile]"));
-  const prefTiles = Array.from(form.querySelectorAll(".contatti__tile[data-pref]"));
-  let pref = "";
-
-  /* Pre-fill from query string (?evento=catamarano | ?pkg=primo-passo) */
+/*
+ * Form "Parliamone!" (uguale su tutte le pagine).
+ * La grafica e i testi si possono cambiare; l'invio vero sta in js/gestionale-form.js
+ * e NON va riscritto qui. Regole: GESTIONALE.md.
+ */
+(function leadForms() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const params = new URLSearchParams(location.search);
-  const ev = params.get("evento");
-  const pkg = params.get("pkg");
-  if (ev) {
-    eventoField.value = ev;
-    messaggioInput.value = `Ciao Emi, mi interessa l'evento "${ev}". `;
-  }
-  if (pkg) {
-    pkgField.value = pkg;
-    messaggioInput.value = `Ciao Emi, vorrei sapere di più sul percorso "${pkg}". `;
-  }
 
-  let current = 0;
+  document.querySelectorAll("[data-lead-form]").forEach((form) => {
+    const el = form.elements;
+    const phoneField = form.querySelector("[data-phone-field]");
+    const errorBox = form.querySelector("[data-form-error]");
+    const submitBtn = form.querySelector('[type="submit"]');
+    const success = form.parentElement.querySelector("[data-form-success]");
+    const successTitle = success && success.querySelector("[data-success-title]");
 
-  function setError(step, text) {
-    const el = form.querySelector(`[data-error="${step}"]`);
-    if (el) el.textContent = text || "";
-  }
-
-  function pad(n) { return String(n).padStart(2, "0"); }
-
-  function show(target, dir = 1) {
-    const from = steps[current];
-    const to = steps[target];
-    if (!to) return;
-    current = target;
-    stepCurrent.textContent = pad(target + 1);
-
-    if (reduced) {
-      from.classList.remove("is-active");
-      to.classList.add("is-active");
-      const firstInput = to.querySelector("input, textarea, button.contatti__tile");
-      if (firstInput) setTimeout(() => firstInput.focus(), 50);
-      return;
+    /* Precompilazione dai link: ?cerco=prova|percorso|evento|community|curiosa, ?percorso=FLOW, ?evento=Roller */
+    const cerco = params.get("cerco");
+    if (cerco) el.cerco.value = cerco === "prova" ? "Prenotare una prova" : cerco;
+    if (params.get("percorso")) {
+      el.percorso.value = params.get("percorso");
+      if (!cerco) el.cerco.value = "percorso";
+    }
+    if (params.get("evento")) {
+      el.evento.value = params.get("evento");
+      if (!cerco) el.cerco.value = "evento";
     }
 
-    const tl = gsap.timeline({
-      defaults: { duration: 0.45, ease: "power3.out" },
+    function pref() {
+      const c = form.querySelector('input[name="pref"]:checked');
+      return c ? c.value : "";
+    }
+    function syncPhone() {
+      const needsPhone = pref() && pref() !== "email";
+      phoneField.hidden = !needsPhone;
+      el.telefono.required = !!needsPhone;
+    }
+    form.querySelectorAll('input[name="pref"]').forEach((r) => r.addEventListener("change", () => {
+      syncPhone();
+      if (!phoneField.hidden) el.telefono.focus({ preventScroll: true });
+    }));
+    syncPhone();
+
+    function fail(input, msg) {
+      errorBox.textContent = msg;
+      if (input) {
+        input.setAttribute("aria-invalid", "true");
+        input.focus();
+      }
+      return false;
+    }
+    form.addEventListener("input", (e) => {
+      if (e.target.getAttribute("aria-invalid")) e.target.removeAttribute("aria-invalid");
     });
-    tl.to(from, { opacity: 0, x: dir * -30, filter: "blur(6px)", duration: 0.35 })
-      .add(() => {
-        from.classList.remove("is-active");
-        to.classList.add("is-active");
-        gsap.set(to, { opacity: 0, x: dir * 30, filter: "blur(6px)" });
-      })
-      .to(to, { opacity: 1, x: 0, filter: "blur(0px)" })
-      .add(() => {
-        const firstInput = to.querySelector("input, textarea, button.contatti__tile");
-        if (firstInput) firstInput.focus({ preventScroll: true });
+
+    function validate() {
+      errorBox.textContent = "";
+      if (!el.nome.value.trim()) return fail(el.nome, "Scrivi il tuo nome.");
+      if (!el.cognome.value.trim()) return fail(el.cognome, "Scrivi il tuo cognome.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.email.value.trim())) return fail(el.email, "Scrivi un indirizzo email valido.");
+      if (!pref()) return fail(form.querySelector('input[name="pref"]'), "Scegli come preferisci che ti ricontatti.");
+      if (pref() !== "email" && !/^[+0-9 ()./-]{6,40}$/.test(el.telefono.value.trim())) {
+        return fail(el.telefono, "Scrivi un numero di telefono valido.");
+      }
+      if (!el.privacy.checked) return fail(el.privacy, "Per mandare il messaggio serve la spunta sull'informativa privacy.");
+      return true;
+    }
+
+    let sending = false;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (sending || !validate()) return;
+      sending = true;
+      submitBtn.setAttribute("aria-busy", "true");
+      const label = submitBtn.textContent;
+      submitBtn.textContent = "Invio in corso…";
+
+      // l'invio vero sta in js/gestionale-form.js: non riscriverlo qui
+      const result = await window.EmiGestionale.sendLead({
+        firstName: el.nome.value.trim(),
+        lastName: el.cognome.value.trim(),
+        email: el.email.value.trim(),
+        phone: el.telefono.value.trim(),
+        contactPreference: pref(),
+        cerco: el.cerco.value,
+        evento: el.evento.value,
+        percorso: el.percorso.value,
+        message: el.messaggio.value,
+        honeypot: el.website.value,
       });
-  }
 
-  function validateStep() {
-    const step = steps[current];
-    const stepNum = step.dataset.step;
-    if (stepNum === "1") {
-      const name = nomeInput.value.trim();
-      if (!name) { nomeInput.focus(); return false; }
-      if (!cognomeInput.value.trim()) { cognomeInput.focus(); return false; }
-      greetName.textContent = `Ciao ${name},`;
-      successName.textContent = `Grazie, ${name}.`;
-      return true;
-    }
-    if (stepNum === "2") {
-      if (!cercoField.value) {
-        const first = tiles[0];
-        if (first) first.focus();
-        return false;
-      }
-      return true;
-    }
-    if (stepNum === "3") return true;
-    if (stepNum === "4") {
-      if (!pref) {
-        setError(4, "Scegli come preferisci che ti ricontatti.");
-        if (prefTiles[0]) prefTiles[0].focus();
-        return false;
-      }
-      if (pref !== "email" && !/^[+0-9 ()./-]{6,40}$/.test(telefonoInput.value.trim())) {
-        setError(4, "Scrivi un numero di telefono valido.");
-        telefonoInput.focus();
-        return false;
-      }
-      setError(4, "");
-      return true;
-    }
-    if (stepNum === "5") {
-      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
-      if (!ok) { emailInput.focus(); return false; }
-      if (!privacyInput.checked) {
-        setError(5, "Per mandare il messaggio serve la spunta sull'informativa privacy.");
-        privacyInput.focus();
-        return false;
-      }
-      setError(5, "");
-      return true;
-    }
-    return true;
-  }
+      sending = false;
+      submitBtn.removeAttribute("aria-busy");
+      submitBtn.textContent = label;
 
-  form.querySelectorAll("[data-next]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (!validateStep()) return;
-      if (current < steps.length - 1) show(current + 1, 1);
-    });
-  });
-
-  form.querySelectorAll("[data-back]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (current > 0) show(current - 1, -1);
-    });
-  });
-
-  tiles.forEach((tile) => {
-    tile.addEventListener("click", () => {
-      tiles.forEach((t) => t.classList.remove("is-selected"));
-      tile.classList.add("is-selected");
-      cercoField.value = tile.dataset.tile;
-    });
-  });
-
-  prefTiles.forEach((tile) => {
-    tile.addEventListener("click", () => {
-      prefTiles.forEach((t) => {
-        t.classList.remove("is-selected");
-        t.setAttribute("aria-checked", "false");
-      });
-      tile.classList.add("is-selected");
-      tile.setAttribute("aria-checked", "true");
-      pref = tile.dataset.pref;
-      telefonoInput.hidden = pref === "email";
-      telefonoInput.required = pref !== "email";
-      setError(4, "");
-      if (!telefonoInput.hidden) telefonoInput.focus({ preventScroll: true });
-    });
-  });
-
-  /* Enter to advance on text inputs */
-  [nomeInput, cognomeInput, telefonoInput, emailInput].forEach((inp) => {
-    if (!inp) return;
-    inp.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const isLast = current === steps.length - 1;
-        if (isLast) { form.requestSubmit(); return; }
-        if (validateStep()) show(current + 1, 1);
+      if (result.ok) {
+        // il grazie compare SOLO se il gestionale ha risposto ok
+        if (successTitle) successTitle.textContent = `Grazie, ${el.nome.value.trim()}!`;
+        form.hidden = true;
+        success.hidden = false;
+        success.focus({ preventScroll: true });
+        if (!reduced && window.gsap) gsap.fromTo(success, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 });
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      } else {
+        fail(null, result.error);
       }
     });
   });
-
-  function showSuccess() {
-    if (reduced) {
-      form.style.display = "none";
-      successPanel.classList.add("is-active");
-      return;
-    }
-    gsap.to(form, {
-      opacity: 0,
-      y: -16,
-      filter: "blur(6px)",
-      duration: 0.45,
-      ease: "power3.out",
-      onComplete: () => {
-        form.style.display = "none";
-        successPanel.classList.add("is-active");
-        gsap.fromTo(successPanel, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
-      },
-    });
-  }
-
-  /* Submit: la richiesta va nel gestionale di Emi (Contatti), tramite js/gestionale-form.js */
-  let sending = false;
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (sending || !validateStep()) return;
-    sending = true;
-    submitBtn.setAttribute("aria-busy", "true");
-    setError(5, "");
-
-    // l'invio vero sta in js/gestionale-form.js: non riscriverlo qui
-    const result = await window.EmiGestionale.sendLead({
-      firstName: nomeInput.value.trim(),
-      lastName: cognomeInput.value.trim(),
-      email: emailInput.value.trim(),
-      phone: telefonoInput.value.trim(),
-      contactPreference: pref,
-      cerco: cercoField.value,
-      evento: eventoField.value,
-      percorso: pkgField.value,
-      message: messaggioInput.value,
-      honeypot: form.elements.website.value,
-    });
-    sending = false;
-    submitBtn.removeAttribute("aria-busy");
-    if (result.ok) showSuccess();
-    else setError(5, result.error);
-  });
-
 })();

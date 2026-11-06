@@ -1,150 +1,43 @@
+/* Animazioni leggere di entrata. Con prefers-reduced-motion non parte nulla e tutto resta visibile. */
 (function reveal() {
-  if (!window.gsap) return;
-  const reduced = window.EBM.reducedMotion;
-  const mobile = window.EBM.isMobile;
-
-  function splitLines(el) {
-    const text = el.textContent.trim();
-    el.innerHTML = "";
-    const words = text.split(/\s+/);
-    const wrap = document.createElement("span");
-    wrap.className = "line-wrap";
-    const line = document.createElement("span");
-    line.className = "line";
-    line.textContent = text;
-    wrap.appendChild(line);
-    el.appendChild(wrap);
-    return [line];
+  const root = document.documentElement;
+  if (!window.gsap || !window.ScrollTrigger || window.EBM.reducedMotion) {
+    root.classList.remove("js-motion");
+    return;
   }
 
-  function splitLinesMulti(el) {
-    const html = el.innerHTML;
-    const segments = html.split(/<br\s*\/?>/i);
-    el.innerHTML = "";
-    const lines = [];
-    segments.forEach((seg) => {
-      const wrap = document.createElement("span");
-      wrap.className = "line-wrap";
-      const line = document.createElement("span");
-      line.className = "line";
-      line.innerHTML = seg.trim();
-      wrap.appendChild(line);
-      el.appendChild(wrap);
-      lines.push(line);
-    });
-    return lines;
-  }
+  /* blocchi che salgono in dissolvenza */
+  ScrollTrigger.batch("[data-reveal]", {
+    start: "top 88%",
+    once: true,
+    onEnter: (els) =>
+      gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.1, overwrite: true }),
+  });
 
-  function splitWords(el) {
-    const text = el.textContent.trim();
-    el.innerHTML = "";
-    const words = text.split(/\s+/);
-    const nodes = [];
-    words.forEach((w, i) => {
-      const wrap = document.createElement("span");
-      wrap.className = "word-wrap";
-      wrap.style.display = "inline-block";
-      wrap.style.overflow = "hidden";
-      const word = document.createElement("span");
-      word.className = "word";
-      word.textContent = w;
-      word.style.display = "inline-block";
-      wrap.appendChild(word);
-      el.appendChild(wrap);
-      if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
-      nodes.push(word);
-    });
-    return nodes;
-  }
-
-  function setupLinesReveal(el) {
-    const lines = splitLinesMulti(el);
-    if (reduced) {
-      gsap.set(lines, { opacity: 1, yPercent: 0 });
-      return;
-    }
-    gsap.set(lines, { yPercent: 110 });
-    gsap.to(lines, {
-      yPercent: 0,
-      duration: 1.0,
-      ease: "expo.out",
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger: el,
-        start: "top 85%",
-        once: true,
-      },
+  /* hero: leggero zoom-out della foto e testo che entra */
+  const heroImg = document.querySelector(".hero__media img");
+  if (heroImg) {
+    gsap.fromTo(heroImg, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "power2.out" });
+    gsap.to(heroImg, {
+      yPercent: 8, ease: "none",
+      scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
     });
   }
 
-  function setupWordsReveal(el) {
-    const words = splitWords(el);
-    if (reduced) { gsap.set(words, { opacity: 1, y: 0 }); return; }
-    gsap.set(words, { opacity: 0, y: 16 });
-    gsap.to(words, {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      ease: "power3.out",
-      stagger: 0.02,
-      scrollTrigger: { trigger: el, start: "top 88%", once: true },
+  /* foto con parallasse delicata */
+  document.querySelectorAll("[data-parallax] img").forEach((img) => {
+    gsap.fromTo(img, { yPercent: -6, scale: 1.12 }, {
+      yPercent: 6, scale: 1.12, ease: "none",
+      scrollTrigger: { trigger: img.closest("[data-parallax]"), start: "top bottom", end: "bottom top", scrub: true },
     });
-  }
+  });
 
-  function setupFadeReveal(el) {
-    if (reduced) { gsap.set(el, { opacity: 1, y: 0 }); return; }
-    gsap.set(el, { opacity: 0, y: 24 });
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 0.9,
-      ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 90%", once: true },
+  /* nome gigante del footer */
+  const giant = document.querySelector(".footer__giant");
+  if (giant) {
+    gsap.from(giant, {
+      yPercent: 40, opacity: 0, duration: 1.4, ease: "power3.out",
+      scrollTrigger: { trigger: giant, start: "top 98%", once: true },
     });
-  }
-
-  function setupClipReveal(el) {
-    if (reduced) { gsap.set(el, { clipPath: "inset(0 0 0 0)" }); return; }
-    gsap.fromTo(
-      el,
-      { clipPath: "inset(0 100% 0 0)" },
-      {
-        clipPath: "inset(0 0 0 0)",
-        duration: 1.2,
-        ease: "expo.out",
-        scrollTrigger: { trigger: el, start: "top 88%", once: true },
-      }
-    );
-  }
-
-  function setupParallax(el) {
-    if (reduced || mobile) return;
-    const speed = parseFloat(el.dataset.parallax) || 0.15;
-    gsap.to(el, {
-      yPercent: -speed * 100,
-      ease: "none",
-      scrollTrigger: {
-        trigger: el,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.2,
-      },
-    });
-  }
-
-  function initAll(scope = document) {
-    scope.querySelectorAll("[data-reveal='lines']").forEach(setupLinesReveal);
-    scope.querySelectorAll("[data-reveal='words']").forEach(setupWordsReveal);
-    scope.querySelectorAll("[data-reveal='fade']").forEach(setupFadeReveal);
-    scope.querySelectorAll("[data-clip-reveal]").forEach(setupClipReveal);
-    scope.querySelectorAll("[data-parallax]").forEach(setupParallax);
-  }
-
-  window.EBM.reveal = { initAll, setupLinesReveal, setupWordsReveal, setupFadeReveal, setupClipReveal, setupParallax };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => initAll());
-  } else {
-    initAll();
   }
 })();

@@ -33,6 +33,6 @@
     const el = document.querySelector(id);
     if (!el) return;
     e.preventDefault();
-    lenis.scrollTo(el, { offset: -64, duration: 1.4 });
+    lenis.scrollTo(el, { offset: -(parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 72) - 16, duration: 1.4 });
   });
 })();

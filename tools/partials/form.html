@@ -1,0 +1,74 @@
+<!--
+  ⚠️ Questo form manda le richieste al gestionale di Emi tramite js/gestionale-form.js.
+  Devono restare: nome, cognome, email, preferenza di contatto (whatsapp / telefono / email),
+  telefono se non sceglie email, la casella privacy e il campo trappola "website". Regole in GESTIONALE.md.
+-->
+<form class="lead-form" data-lead-form novalidate>
+  <input type="hidden" name="percorso" />
+  <input type="hidden" name="evento" />
+
+  <div class="lead-form__row lead-form__row--2">
+    <div class="field">
+      <label for="f-nome">Nome</label>
+      <input type="text" id="f-nome" name="nome" autocomplete="given-name" maxlength="80" required />
+    </div>
+    <div class="field">
+      <label for="f-cognome">Cognome</label>
+      <input type="text" id="f-cognome" name="cognome" autocomplete="family-name" maxlength="80" required />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="f-email">Email</label>
+    <input type="email" id="f-email" name="email" autocomplete="email" maxlength="200" required />
+  </div>
+
+  <div class="field">
+    <label for="f-cerco">Di cosa vorresti parlare?</label>
+    <select id="f-cerco" name="cerco">
+      <option value="Prenotare una prova">Vorrei prenotare una prova</option>
+      <option value="percorso">Un percorso di allenamento</option>
+      <option value="evento">Un evento o un'esperienza</option>
+      <option value="community">Far parte della community</option>
+      <option value="curiosa">Sono curiosa, vorrei saperne di più</option>
+    </select>
+  </div>
+
+  <fieldset class="field">
+    <legend class="field__label">Come preferisci che ti ricontatti?</legend>
+    <div class="choices">
+      <label class="choice"><input type="radio" name="pref" value="whatsapp" required /><span>WhatsApp</span></label>
+      <label class="choice"><input type="radio" name="pref" value="telefono" /><span>Telefono</span></label>
+      <label class="choice"><input type="radio" name="pref" value="email" /><span>Email</span></label>
+    </div>
+  </fieldset>
+
+  <div class="field" data-phone-field hidden>
+    <label for="f-telefono">Il tuo numero</label>
+    <input type="tel" id="f-telefono" name="telefono" autocomplete="tel" maxlength="40" />
+  </div>
+
+  <div class="field">
+    <label for="f-messaggio">Messaggio <span class="field__hint">(facoltativo)</span></label>
+    <textarea id="f-messaggio" name="messaggio" rows="4" maxlength="1800"></textarea>
+  </div>
+
+  <label class="privacy-check">
+    <input type="checkbox" name="privacy" required />
+    <span>Ho letto l'<a href="{{root}}privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento a essere ricontattata.</span>
+  </label>
+
+  <!-- trappola per i bot: nascosta alle persone, da non togliere (non type="hidden") -->
+  <div class="lead-form__trap" aria-hidden="true">
+    <label>Lascia vuoto <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <p class="form-error" data-form-error role="alert"></p>
+  <button type="submit" class="btn btn--primary">Manda il messaggio</button>
+</form>
+
+<div class="form-success" data-form-success hidden tabindex="-1">
+  <p class="eyebrow">Ricevuto</p>
+  <h3 class="t-h2" data-success-title>Grazie!</h3>
+  <p class="lead">Ti rispondo al più presto. Nel frattempo, se ti va, passa a trovarci su <a href="https://www.instagram.com/emibodymovement/" target="_blank" rel="noopener">Instagram</a>.</p>
+</div>
