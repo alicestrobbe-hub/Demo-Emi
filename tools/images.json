@@ -1,0 +1,357 @@
+{
+  "galleria-01": {
+    "width": 5897,
+    "height": 3924,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-02": {
+    "width": 3687,
+    "height": 5542,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "sala-luce": {
+    "width": 5837,
+    "height": 3884,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-mobilita": {
+    "width": 5589,
+    "height": 3719,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-03": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-04": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "community-pausa": {
+    "width": 5585,
+    "height": 3716,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-accoglienza": {
+    "width": 5766,
+    "height": 3788,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-correzione-risata": {
+    "width": 5722,
+    "height": 3807,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-7": {
+    "width": 5909,
+    "height": 3932,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "allenamento-postura": {
+    "width": 5700,
+    "height": 3792,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-05": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-06": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-07": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "community-batti-cinque": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-08": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "hero-gruppo": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-rilassamento": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-6": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-4": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-09": {
+    "width": 3872,
+    "height": 5820,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-2": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-sorriso": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-5": {
+    "width": 5807,
+    "height": 3864,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-1": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-affondo": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-affondi": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-10": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-11": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "dettaglio-tecnica-3": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-ritratto-risata": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-12": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-respiro": {
+    "width": 4024,
+    "height": 6048,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "galleria-13": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-spiegazione": {
+    "width": 5818,
+    "height": 3871,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "evento-roller": {
+    "width": 1440,
+    "height": 1920,
+    "widths": [
+      800,
+      1440
+    ]
+  },
+  "evento-catamarano": {
+    "width": 1500,
+    "height": 1000,
+    "widths": [
+      800,
+      1500
+    ]
+  },
+  "evento-roller-1": {
+    "width": 1440,
+    "height": 1920,
+    "widths": [
+      800,
+      1440
+    ]
+  },
+  "evento-roller-2": {
+    "width": 1440,
+    "height": 1920,
+    "widths": [
+      800,
+      1440
+    ]
+  },
+  "evento-roller-3": {
+    "width": 1440,
+    "height": 1920,
+    "widths": [
+      800,
+      1440
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "emi-tools",
+  "private": true,
+  "description": "Script di supporto (non serve al sito pubblicato)",
+  "scripts": { "export-images": "node export-images.js" },
+  "dependencies": { "sharp": "0.33.5" }
+}
