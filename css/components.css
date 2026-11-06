@@ -489,3 +489,29 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   user-select: none;
 }
 .footer__giant em { font-style: italic; }
+
+/* ---------- SCROLLBAR PERSONALIZZATA (js/scrollbar.js) ---------- */
+/* la scrollbar standard si nasconde solo quando lo script è partito */
+html.has-custom-scrollbar { scrollbar-width: none; }
+html.has-custom-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
+html.is-scrollbar-dragging, html.is-scrollbar-dragging * { user-select: none; cursor: grabbing !important; }
+
+.scrollbar {
+  position: fixed; top: 8px; right: 0; bottom: 8px; z-index: 150;
+  width: 18px;
+  display: flex; justify-content: center;
+  opacity: 0;
+  transition: opacity 400ms var(--ease);
+}
+.scrollbar.is-active { opacity: 1; }
+.scrollbar.is-disabled, .menu-open .scrollbar { display: none; }
+.scrollbar__thumb {
+  position: absolute; top: 0; right: 5px;
+  width: 6px;
+  border-radius: var(--r-pill);
+  background: var(--muschio);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--crema) 85%, transparent);
+  cursor: grab;
+  transition: width var(--t-fast) var(--ease), right var(--t-fast) var(--ease), background var(--t-fast);
+}
+.scrollbar:hover .scrollbar__thumb, .scrollbar.is-dragging .scrollbar__thumb { width: 10px; right: 4px; background: var(--terracotta); }
