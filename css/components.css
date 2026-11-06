@@ -274,8 +274,14 @@
   box-shadow: var(--shadow-soft);
 }
 .vid__frame video { width: 100%; height: 100%; object-fit: cover; }
+.vid__frame::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px;
+  background: linear-gradient(to top, rgba(20, 22, 15, 0.38), rgba(20, 22, 15, 0));
+  pointer-events: none;
+}
+.vid__controls { z-index: 2; }
 .vid__controls {
-  position: absolute; left: 0; right: 0; bottom: 18px;
+  position: absolute; left: 0; right: 0; bottom: 26px;
   display: flex; justify-content: center; gap: 8px;
 }
 .vid__btn {
@@ -288,6 +294,36 @@
   backdrop-filter: blur(6px);
 }
 .vid__btn svg { width: 18px; height: 18px; }
+
+/* barra di avanzamento sottile sul bordo inferiore: si clicca e si trascina */
+.vid__seek {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  height: 22px;
+  display: flex; align-items: flex-end;
+  cursor: pointer; touch-action: none;
+}
+.vid__seek:focus-visible { outline: none; }
+.vid__seek-track {
+  position: relative; width: 100%; height: 3px;
+  background: rgba(246, 241, 231, 0.28);
+  transition: height var(--t-fast) var(--ease);
+}
+.vid__seek-fill {
+  position: absolute; inset: 0;
+  background: var(--crema);
+  transform: scaleX(0); transform-origin: left center;
+}
+.vid__seek-knob {
+  position: absolute; top: 50%; left: 0;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--crema);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--t-fast) var(--ease);
+}
+.vid__seek:hover .vid__seek-track, .vid__seek.is-dragging .vid__seek-track, .vid__seek:focus-visible .vid__seek-track { height: 5px; }
+.vid__seek:hover .vid__seek-knob, .vid__seek.is-dragging .vid__seek-knob, .vid__seek:focus-visible .vid__seek-knob { transform: translate(-50%, -50%) scale(1); }
+.vid__seek:focus-visible .vid__seek-track { box-shadow: 0 0 0 2px var(--sole); }
 .vid__btn:hover { background: var(--crema); }
 .vid__btn .when-on, .vid__btn[aria-pressed="true"] .when-off { display: none; }
 .vid__btn[aria-pressed="true"] .when-on { display: inline; }

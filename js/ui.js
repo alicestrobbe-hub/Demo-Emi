@@ -92,6 +92,68 @@
     video.addEventListener("play", syncPlay);
     video.addEventListener("pause", syncPlay);
     syncPlay();
+
+    /* barra di avanzamento: clic per saltare, trascina per andare avanti e indietro, frecce da tastiera */
+    const seek = wrap.querySelector("[data-video-seek]");
+    if (seek) {
+      const fill = seek.querySelector(".vid__seek-fill");
+      const knob = seek.querySelector(".vid__seek-knob");
+      let seeking = false, wasPlaying = false, raf = 0;
+      const dur = () => (isFinite(video.duration) && video.duration) || 31;
+
+      function paint(t) {
+        const p = Math.min(Math.max(t / dur(), 0), 1);
+        fill.style.transform = `scaleX(${p})`;
+        knob.style.left = `${p * 100}%`;
+        seek.setAttribute("aria-valuenow", String(Math.round(t)));
+        seek.setAttribute("aria-valuemax", String(Math.round(dur())));
+        seek.setAttribute("aria-valuetext", `${Math.round(t)} secondi su ${Math.round(dur())}`);
+      }
+      function loop() {
+        if (!seeking) paint(video.currentTime);
+        raf = requestAnimationFrame(loop);
+      }
+      video.addEventListener("play", () => { cancelAnimationFrame(raf); loop(); });
+      video.addEventListener("pause", () => { cancelAnimationFrame(raf); if (!seeking) paint(video.currentTime); });
+      video.addEventListener("loadedmetadata", () => paint(video.currentTime));
+
+      function setTime(t) {
+        load();
+        t = Math.min(Math.max(t, 0), dur());
+        if (video.readyState >= 1) video.currentTime = t;
+        else video.addEventListener("loadedmetadata", () => { video.currentTime = t; }, { once: true });
+        paint(t);
+      }
+      function timeAt(e) {
+        const r = seek.getBoundingClientRect();
+        return ((e.clientX - r.left) / r.width) * dur();
+      }
+      seek.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        seeking = true;
+        seek.setPointerCapture(e.pointerId);
+        seek.classList.add("is-dragging");
+        wasPlaying = !video.paused;
+        if (wasPlaying) video.pause();
+        setTime(timeAt(e));
+      });
+      seek.addEventListener("pointermove", (e) => { if (seeking) setTime(timeAt(e)); });
+      const end = () => {
+        if (!seeking) return;
+        seeking = false;
+        seek.classList.remove("is-dragging");
+        if (wasPlaying) video.play().catch(() => {});
+      };
+      seek.addEventListener("pointerup", end);
+      seek.addEventListener("pointercancel", end);
+      seek.addEventListener("keydown", (e) => {
+        const step = { ArrowRight: 5, ArrowUp: 5, ArrowLeft: -5, ArrowDown: -5 }[e.key];
+        if (step) { e.preventDefault(); setTime(video.currentTime + step); }
+        if (e.key === "Home") { e.preventDefault(); setTime(0); }
+        if (e.key === "End") { e.preventDefault(); setTime(dur() - 0.5); }
+      });
+      paint(0);
+    }
   });
 
   /* ---------- Percorsi: interruttore Trimestrale / Semestrale ---------- */
