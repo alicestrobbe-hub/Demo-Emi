@@ -331,7 +331,7 @@
 /* ---------- FORM CONTATTI ---------- */
 .contact { display: grid; }
 .contact__photo { position: relative; min-height: 70vh; }
-.contact__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.contact__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 22% 35%; }
 .contact__card { padding: clamp(48px, 7vw, 112px) var(--gutter); }
 .contact__card > header > * + * { margin-top: 18px; }
 .contact__card header { margin-bottom: 36px; max-width: 560px; }

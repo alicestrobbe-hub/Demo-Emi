@@ -353,5 +353,32 @@
       800,
       1440
     ]
+  },
+  "salto-cubo": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "salto-cubo-2": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "emi-batti-cinque": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
   }
 }

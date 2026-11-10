@@ -4,6 +4,7 @@
  *
  * Uso:  cd tools && npm install && npm run export-images
  * Per aggiungere una foto: aggiungi una riga a FOTO e rilancia.
+ * Solo alcune foto:  node export-images.js salto-cubo salto-cubo-2
  */
 const sharp = require("sharp");
 const fs = require("fs");
@@ -33,6 +34,10 @@ const FOTO = {
   14: "sala-luce",
   119: "gruppo-affondi",
   68: "community-batti-cinque",
+  // movimenti esplosivi
+  20: "salto-cubo",
+  22: "salto-cubo-2",
+  74: "emi-batti-cinque",
   27: "community-pausa",
   85: "gruppo-rilassamento",
   17: "gruppo-mobilita",
@@ -88,13 +93,17 @@ async function exportOne(file, name, manifest) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const manifest = {};
+  // con dei nomi come argomenti esporta solo quelli e aggiorna il manifest esistente
+  const only = process.argv.slice(2);
+  const manifestFile = path.join(__dirname, "images.json");
+  const manifest = only.length ? JSON.parse(fs.readFileSync(manifestFile, "utf8")) : {};
+  const wanted = (name) => !only.length || only.includes(name);
   for (const [n, name] of Object.entries(FOTO)) {
-    await exportOne(path.join(SRC, `Emi body movement-${n}.jpg`), name, manifest);
+    if (wanted(name)) await exportOne(path.join(SRC, `Emi body movement-${n}.jpg`), name, manifest);
   }
   for (const [f, name] of Object.entries(VECCHIE)) {
-    await exportOne(path.join(ROOT, "assets", f), name, manifest);
+    if (wanted(name)) await exportOne(path.join(ROOT, "assets", f), name, manifest);
   }
   // poster del video (primo fotogramma utile) — generato a parte con ffmpeg se serve
-  fs.writeFileSync(path.join(__dirname, "images.json"), JSON.stringify(manifest, null, 2));
+  fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2));
 })();

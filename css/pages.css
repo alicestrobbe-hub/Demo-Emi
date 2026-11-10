@@ -260,6 +260,10 @@
 /* ---------- Inquadrature foto (object-position) ---------- */
 .frame-left img { object-position: 18% 50%; }
 .frame-up img { object-position: 50% 22%; }
+.frame-up-lieve img { object-position: 50% 10%; }
+.frame-salto img { object-position: 30% 50%; }
+/* home "Lo studio": foto quadrata, tagliata a sinistra per stringere su Emi e l'allieva */
+.frame-studio img { object-position: 86% 50%; }
 /* foto verticale già mostrata per intero in larghezza: piccolo zoom verso destra */
 .frame-right img { transform: scale(1.16); transform-origin: 92% 62%; }
 
