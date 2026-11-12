@@ -156,6 +156,66 @@
     }
   });
 
+  /* ---------- Metodo: montaggio delle discipline di Emi nel telefono (muto, in loop, barre stile storie) ---------- */
+  document.querySelectorAll("[data-montage]").forEach((wrap) => {
+    const video = wrap.querySelector("video");
+    const tag = wrap.querySelector("[data-montage-tag]");
+    const playBtn = wrap.querySelector("[data-montage-play]");
+    const barsBox = wrap.querySelector("[data-montage-bars]");
+    // secondo in cui inizia ogni spezzone di assets/video/emi-sport.mp4 (se si rimonta il video, aggiornare qui)
+    const cuts = [
+      [0, "Backflip"], [1.27, "Sci"], [3.27, "Skate"], [5.67, "Ping pong"], [7.47, "Apnea"],
+      [10.27, "Balance board"], [12.23, "Corsa"], [13.23, "Tuffi"], [14.63, "Moto d'acqua"], [15.93, "Sub"],
+    ];
+    const fills = cuts.map(() => {
+      const bar = document.createElement("span");
+      bar.className = "phone__bar";
+      const fill = document.createElement("span");
+      bar.appendChild(fill);
+      if (barsBox) barsBox.appendChild(bar);
+      return fill;
+    });
+    let userPaused = reduced, current = -1, raf = 0;
+
+    function paint(t) {
+      const end = (isFinite(video.duration) && video.duration) || 18.63;
+      let idx = 0;
+      cuts.forEach(([start], i) => { if (t >= start - 0.02) idx = i; });
+      fills.forEach((f, i) => {
+        const a = cuts[i][0], b = i + 1 < cuts.length ? cuts[i + 1][0] : end;
+        const p = i < idx ? 1 : i > idx ? 0 : Math.min(Math.max((t - a) / (b - a), 0), 1);
+        f.style.transform = `scaleX(${p})`;
+      });
+      if (idx !== current && tag) { current = idx; tag.textContent = cuts[idx][1]; }
+    }
+    function loop() { paint(video.currentTime); raf = requestAnimationFrame(loop); }
+    function syncPlay() {
+      const playing = !video.paused;
+      playBtn.setAttribute("aria-pressed", String(!playing));
+      playBtn.setAttribute("aria-label", playing ? "Metti in pausa il video" : "Riproduci il video");
+      cancelAnimationFrame(raf);
+      if (playing) loop(); else paint(video.currentTime);
+    }
+    function load() {
+      if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
+    }
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { load(); if (!userPaused) video.play().catch(() => {}); }
+        else if (!video.paused) video.pause();
+      });
+    }, { threshold: 0.35 }).observe(video);
+
+    playBtn.addEventListener("click", () => {
+      load();
+      if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+      else { userPaused = true; video.pause(); }
+    });
+    video.addEventListener("play", syncPlay);
+    video.addEventListener("pause", syncPlay);
+    syncPlay();
+  });
+
   /* ---------- Percorsi: interruttore Trimestrale / Semestrale ---------- */
   document.querySelectorAll("[data-periodo-switch]").forEach((sw) => {
     const scope = document.querySelector(sw.getAttribute("data-periodo-switch"));

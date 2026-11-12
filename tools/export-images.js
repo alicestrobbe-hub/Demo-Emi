@@ -32,6 +32,8 @@ const FOTO = {
   36: "allenamento-postura",
   142: "gruppo-spiegazione",
   14: "sala-luce",
+  15: "gruppo-tappetini",
+  87: "gruppo-rilassamento-braccia",
   119: "gruppo-affondi",
   68: "community-batti-cinque",
   // movimenti esplosivi

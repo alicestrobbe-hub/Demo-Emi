@@ -7,19 +7,21 @@
   position: fixed; inset: 0 0 auto 0; z-index: 100;
   height: var(--nav-h);
   color: var(--inchiostro);
-  background: color-mix(in srgb, var(--crema) 94%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* niente backdrop-filter: la sfocatura andava ricalcolata a ogni fotogramma di scroll e faceva scattare la barra */
+  background: color-mix(in srgb, var(--crema) 97%, transparent);
   border-bottom: 1px solid transparent;
-  transition: background var(--t-med) var(--ease), color var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: layout style;
+  transition: background-color var(--t-med) var(--ease), color var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform 360ms var(--ease);
 }
 .nav.is-scrolled { border-bottom-color: var(--line); }
-.nav.is-hidden { transform: translateY(-100%); }
+.nav.is-hidden { transform: translate3d(0, -100%, 0); }
 .has-photo-hero .nav:not(.is-scrolled) {
-  background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+  background-color: transparent;
   color: var(--crema);
 }
-.menu-open .nav { background: transparent; backdrop-filter: none; color: var(--crema); border-color: transparent; transform: none; }
+.menu-open .nav { background-color: transparent; color: var(--crema); border-color: transparent; transform: none; }
 
 .nav__inner {
   height: 100%;
@@ -331,7 +333,7 @@
 /* ---------- FORM CONTATTI ---------- */
 .contact { display: grid; }
 .contact__photo { position: relative; min-height: 70vh; }
-.contact__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 22% 35%; }
+.contact__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45% 30%; } /* contatto-sorrisi: volti in alto al centro */
 .contact__card { padding: clamp(48px, 7vw, 112px) var(--gutter); }
 .contact__card > header > * + * { margin-top: 18px; }
 .contact__card header { margin-bottom: 36px; max-width: 560px; }
@@ -513,6 +515,9 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   font-size: var(--fs-small); opacity: 0.78;
   padding-bottom: 12px;
 }
+.footer__credit { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: opacity .2s; }
+.footer__credit img { height: 1.5em; width: auto; display: block; transform: translateY(0.14em); }
+.footer__credit:hover { opacity: 0.8; }
 .footer__giant {
   font-family: var(--ff-serif);
   font-size: 13.4vw;
@@ -521,7 +526,7 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
   white-space: nowrap;
   text-align: center;
   margin-top: clamp(16px, 3vw, 40px);
-  padding-bottom: 0.06em;
+  padding-bottom: 0.24em; /* spazio per le discendenti (la "y" di bodymovement) */
   user-select: none;
 }
 .footer__giant em { font-style: italic; }

@@ -380,5 +380,31 @@
       1600,
       2400
     ]
+  },
+  "contatto-sorrisi": {
+    "width": 1080,
+    "height": 1350,
+    "widths": [
+      800,
+      1080
+    ]
+  },
+  "gruppo-tappetini": {
+    "width": 5090,
+    "height": 3387,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
+  },
+  "gruppo-rilassamento-braccia": {
+    "width": 6048,
+    "height": 4024,
+    "widths": [
+      800,
+      1600,
+      2400
+    ]
   }
 }

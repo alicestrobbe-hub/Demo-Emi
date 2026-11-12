@@ -1,3 +1,6 @@
 assets/img nuove/
 .DS_Store
 node_modules/
+
+# video originali da iPhone (troppo pesanti, nel sito va solo assets/video/emi-sport.mp4)
+assets/video/*.MOV

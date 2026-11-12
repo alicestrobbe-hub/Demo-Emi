@@ -1,0 +1,8 @@
+{
+  "name": "emi-bodymovement",
+  "private": true,
+  "description": "Sito statico: npm run dev lo apre in locale su http://localhost:3000",
+  "scripts": {
+    "dev": "npx --yes http-server@14.1.1 . -a 127.0.0.1 -p 3000 -c-1 -o"
+  }
+}

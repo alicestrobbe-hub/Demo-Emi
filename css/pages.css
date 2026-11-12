@@ -52,6 +52,27 @@
 .banner--short { height: clamp(300px, 56vh, 620px); }
 .banner--short::after { display: none; }
 
+/* banner "Lo studio" in home (foto 20): <picture> con taglio largo per desktop e quadrato per telefono */
+.banner > picture { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.banner > picture img { width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+@media (max-width: 699px) {
+  /* sul telefono la foto sta sopra e il testo sotto, così non copre le persone */
+  .banner--salto { height: auto; display: block; background: var(--muschio-scuro); }
+  .banner--salto > picture { position: relative; display: block; aspect-ratio: 4700 / 4024; }
+  .banner--salto::after { display: none; }
+  .banner--salto .banner__text { padding-top: 28px; }
+}
+@media (min-width: 700px) {
+  /* frase in basso a destra, sopra i pannelli chiari: a sinistra c'è Emi */
+  .banner--salto .banner__text { display: flex; justify-content: flex-end; }
+  .banner--salto .banner__text .title { text-align: right; max-width: 10.5ch; font-size: calc(var(--fs-h2) * 0.9); }
+  .banner--salto::after {
+    background:
+      linear-gradient(to left, rgba(20, 22, 15, 0.55) 0%, rgba(20, 22, 15, 0.15) 30%, rgba(20, 22, 15, 0) 45%),
+      linear-gradient(to top, rgba(20, 22, 15, 0.55), rgba(20, 22, 15, 0) 40%);
+  }
+}
+
 .duo { display: grid; }
 .duo__text { display: flex; align-items: center; padding: clamp(64px, 9vw, 140px) var(--gutter); }
 .duo__text > div { max-width: 560px; }
@@ -192,8 +213,9 @@
 .contact-page { padding: calc(var(--nav-h) + clamp(40px, 6vw, 88px)) 0 var(--space-section); background: var(--crema); }
 .contact-page__grid { display: grid; gap: var(--space-block); }
 .contact-page__intro > * + * { margin-top: 22px; }
-.contact-page__photo { aspect-ratio: 4 / 5; max-width: 420px; margin-top: 44px !important; }
-.contact-page__photo img { object-position: 45% 50%; }
+.contact-page__photo-wrap { max-width: 420px; margin-top: 56px !important; }
+.contact-page__photo { aspect-ratio: 4 / 5; }
+.contact-page__photo img { object-position: 50% 40%; }
 .contact-page__form > h2 { margin-bottom: 28px; }
 @media (min-width: 960px) {
   .contact-page__grid { grid-template-columns: 1fr 1.05fr; gap: clamp(48px, 6vw, 112px); align-items: start; }
@@ -257,13 +279,29 @@
   .meet .vid__frame { width: min(calc(100vw - 2 * var(--gutter) - 44px), 460px); }
 }
 
+/* ---------- Contorno ad arco sfalsato (come intorno al video in home) ---------- */
+.arch-deco { position: relative; }
+.arch-deco::before {
+  content: ""; position: absolute; inset: -22px -22px 22px 22px;
+  border: 1.5px solid rgba(74, 84, 48, 0.5);
+  border-radius: var(--r-arch);
+  pointer-events: none;
+}
+@media (min-width: 960px) { .arch-deco::before { inset: -28px -28px 28px 28px; } }
+@media (max-width: 959px) {
+  .arch-deco { margin: 16px 16px 0 0; }
+  .arch-deco::before { inset: -16px -16px 16px 16px; }
+}
+.phero--arch .phero__media .arch-deco { max-width: 520px; margin-inline: auto; width: 100%; }
+@media (max-width: 959px) { .phero--arch .phero__media .arch-deco { width: calc(100% - 16px); max-width: 504px; margin: 16px auto 0; } }
+
 /* ---------- Inquadrature foto (object-position) ---------- */
 .frame-left img { object-position: 18% 50%; }
 .frame-up img { object-position: 50% 22%; }
 .frame-up-lieve img { object-position: 50% 10%; }
 .frame-salto img { object-position: 30% 50%; }
 /* home "Lo studio": foto quadrata, tagliata a sinistra per stringere su Emi e l'allieva */
-.frame-studio img { object-position: 86% 50%; }
+.frame-studio img { object-position: 50% 50%; } /* foto già tagliata quadrata (studio-allenamento) */
 /* foto verticale già mostrata per intero in larghezza: piccolo zoom verso destra */
 .frame-right img { transform: scale(1.16); transform-origin: 92% 62%; }
 
@@ -283,4 +321,144 @@
 @media (min-width: 900px) {
   .banner__split { flex-direction: row; justify-content: space-between; align-items: flex-end; }
   .banner__claim { text-align: right; }
+}
+
+/* metodo, banner tra principi e storia: Emi è a destra, quindi la frase va a sinistra sul pavimento */
+.banner--tappetini > img { object-position: 64% 30%; }
+.banner--tappetini::after {
+  background:
+    linear-gradient(to right, rgba(20, 22, 15, 0.6) 0%, rgba(20, 22, 15, 0.12) 50%, rgba(20, 22, 15, 0) 70%),
+    linear-gradient(to top, rgba(20, 22, 15, 0.5), rgba(20, 22, 15, 0) 45%);
+}
+@media (min-width: 900px) {
+  .banner--tappetini > img { object-position: 50% 32%; }
+  .banner--tappetini .banner__split { flex-direction: row-reverse; }
+  .banner--tappetini .banner__claim { text-align: left; }
+}
+
+/* metodo, "Il prossimo passo": foto orizzontale in un riquadro quasi verticale, centrata sul viso di Emi */
+.frame-rilassamento img { object-position: 50% 55%; }
+@media (min-width: 900px) { .frame-rilassamento img { object-position: 64% 55%; } }
+
+/* community, "Ci muoviamo anche fuori": copertina roller (gruppo in basso, albero sopra) */
+.frame-roller img { object-position: 50% 66%; }
+@media (min-width: 900px) { .frame-roller img { object-position: 50% 55%; } }
+
+/* metodo, "Una preparazione fisica a 360°": testo + montaggio video delle discipline di Emi */
+.prep { align-items: start; }
+#preparazione { overflow-x: clip; }
+.prep__skills { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.prep__skills li {
+  padding: 7px 16px; border-radius: var(--r-pill);
+  border: 1.5px solid rgba(74, 84, 48, 0.35);
+  font-size: var(--fs-small); font-weight: 600;
+}
+.prep__quote { margin: 0; padding-top: 28px; border-top: 1px solid var(--line); }
+.prep__quote p {
+  font-family: var(--ff-serif); font-style: italic;
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.1rem); line-height: 1.2; max-width: 26ch;
+}
+.prep__quote .signature { margin-top: 14px; font-size: 2rem; color: var(--muschio); }
+.prep__media { position: relative; margin: 0; display: grid; justify-items: center; }
+.prep__glow {
+  position: absolute; z-index: 0; top: 4%; left: 50%; transform: translateX(-50%);
+  width: min(560px, 115%); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--sole-soft), color-mix(in srgb, var(--terracotta-soft) 70%, transparent) 62%, transparent);
+  pointer-events: none;
+}
+.prep__badge {
+  position: absolute; z-index: 2; width: clamp(92px, 8.5vw, 124px); height: auto;
+  left: calc(50% - var(--phone-w) / 2 - clamp(40px, 4vw, 64px)); top: 14%;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+}
+.prep__badge text:first-of-type { animation: badge-spin 22s linear infinite; transform-origin: 60px 60px; }
+@media (prefers-reduced-motion: reduce) { .prep__badge text:first-of-type { animation: none; } }
+.prep__ig {
+  position: relative; display: inline-flex; align-items: center; gap: 10px; margin-top: 16px;
+  min-height: 44px; padding: 9px 18px 9px 14px; border-radius: var(--r-pill);
+  border: 1.5px solid rgba(74, 84, 48, 0.35); color: var(--inchiostro);
+  font-size: var(--fs-small); text-decoration: none;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.prep__ig svg { width: 20px; height: 20px; flex: none; }
+.prep__ig:hover { background: var(--sabbia); border-color: var(--muschio); }
+.prep__caption { position: relative; margin: 36px auto 0; max-width: 34ch; text-align: center; color: var(--text-soft); font-size: var(--fs-small); }
+
+/* telefono stile reel: cornice in titanio scuro, isola, barre stile storie, icone a lato */
+.prep__media { --phone-w: min(420px, calc((100svh - 140px) * 9 / 19.5 + 24px)); }
+.phone {
+  position: relative; z-index: 1; width: var(--phone-w); aspect-ratio: 9 / 19.5;
+  padding: 11px; border-radius: 58px;
+  background: linear-gradient(145deg, #4a4a46 0%, #1c1c1a 22%, #0d0d0c 60%, #34332f 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.14),
+    inset 0 0 0 4px #0b0b0a,
+    0 2px 0 rgba(255, 255, 255, 0.06),
+    0 50px 90px -40px rgba(30, 31, 26, 0.6),
+    0 24px 40px -24px rgba(30, 31, 26, 0.45);
+  transform: rotate(-2deg);
+}
+/* tasti laterali */
+.phone::before, .phone::after {
+  content: ""; position: absolute; width: 4px; border-radius: 2px; background: #22221f;
+}
+.phone::before { left: -3px; top: 20%; height: 9%; box-shadow: 0 calc(var(--phone-w) * 0.24) 0 #22221f; }
+.phone::after { right: -3px; top: 27%; height: 13%; }
+.phone__screen {
+  position: relative; width: 100%; height: 100%; overflow: hidden;
+  border-radius: 47px; background: #000; color: #fff;
+  isolation: isolate;
+}
+.phone__screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+.phone__screen::before, .phone__screen::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; z-index: -1; }
+.phone__screen::before { top: 0; height: 26%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent); }
+.phone__screen::after { bottom: 0; height: 40%; background: linear-gradient(to top, rgba(0, 0, 0, 0.62), transparent); }
+.phone__island {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 30%; height: 28px; border-radius: 20px; background: #000;
+}
+.phone__top { position: absolute; left: 16px; right: 16px; top: 60px; }
+.phone__bars { display: flex; gap: 4px; }
+.phone__bar { flex: 1; height: 2.5px; border-radius: 2px; background: rgba(255, 255, 255, 0.35); overflow: hidden; }
+.phone__bar span { display: block; height: 100%; background: #fff; transform-origin: left; transform: scaleX(0); }
+.phone__user { display: flex; align-items: center; gap: 9px; margin-top: 12px; font-size: 0.875rem; line-height: 1.2; }
+.phone__avatar {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--muschio); color: var(--crema);
+  font-family: var(--ff-serif); font-style: italic; font-size: 1.25rem; line-height: 1;
+  box-shadow: 0 0 0 2px #fff;
+}
+.phone__handle { font-weight: 600; }
+.phone__time { opacity: 0.75; white-space: nowrap; }
+@media (max-width: 420px) { .phone__time { display: none; } }
+.phone__side {
+  position: absolute; right: 12px; bottom: 120px;
+  display: grid; gap: 18px; justify-items: center;
+}
+.phone__icon { display: grid; place-items: center; width: 44px; height: 44px; color: #fff; }
+.phone__icon svg { width: 27px; height: 27px; filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35)); }
+.phone__play {
+  border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer;
+}
+.phone__play svg { width: 20px; height: 20px; }
+.phone__play .when-on, .phone__play[aria-pressed="true"] .when-off { display: none; }
+.phone__play[aria-pressed="true"] .when-on { display: inline; }
+.phone__play:focus-visible { outline: 2px solid var(--sole); outline-offset: 2px; }
+.phone__bottom { position: absolute; left: 16px; right: 72px; bottom: 30px; }
+.phone__tag {
+  display: inline-block; padding: 6px 15px; border-radius: var(--r-pill);
+  background: var(--sole); color: var(--inchiostro);
+  font-family: var(--ff-serif); font-style: italic; font-size: 1.3rem; line-height: 1.1;
+}
+.phone__caption { margin-top: 10px; font-size: 0.9rem; line-height: 1.4; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4); }
+
+@media (min-width: 960px) {
+  .prep { grid-template-columns: 1fr minmax(0, 0.95fr); align-items: center; }
+}
+@media (max-width: 959px) {
+  .prep__media { --phone-w: min(calc(100vw - 2 * var(--gutter) - 24px), 360px); margin-top: 24px; }
+  .prep__badge { left: auto; right: max(0px, calc(50% - var(--phone-w) / 2 - 34px)); top: -18px; width: 92px; }
+  .phone { border-radius: 52px; padding: 10px; }
+  .phone__screen { border-radius: 42px; }
 }

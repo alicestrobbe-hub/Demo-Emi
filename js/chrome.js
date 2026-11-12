@@ -13,17 +13,37 @@
   /* Nav: sfondo pieno dopo lo scroll, si nasconde scendendo e ricompare salendo */
   const nav = document.querySelector("[data-nav-root]");
   if (!nav) return;
-  let lastY = window.scrollY;
-  function onScroll() {
-    const y = window.scrollY;
-    nav.classList.toggle("is-scrolled", y > 24);
-    const goingDown = y > lastY && y > 400;
-    if (!document.documentElement.classList.contains("menu-open")) nav.classList.toggle("is-hidden", goingDown);
-    lastY = y;
+  /* Un solo aggiornamento per fotogramma e una soglia di qualche pixel: così i piccoli
+     cambi di direzione dello scroll morbido (Lenis, trackpad) non fanno sparire e
+     ricomparire la barra di continuo. Le classi cambiano solo quando cambia lo stato. */
+  const HIDE_AFTER = 14;   // px scesi di fila prima di nasconderla
+  const SHOW_AFTER = 6;    // px saliti di fila prima di rimostrarla
+  let lastY = window.scrollY, travel = 0, scrolled = null, hidden = false, ticking = false;
+  function setHidden(v) {
+    if (v === hidden) return;
+    hidden = v;
+    nav.classList.toggle("is-hidden", v);
   }
-  onScroll();
+  function update() {
+    ticking = false;
+    const y = Math.max(window.scrollY, 0);
+    const isScrolled = y > 24;
+    if (isScrolled !== scrolled) { scrolled = isScrolled; nav.classList.toggle("is-scrolled", isScrolled); }
+
+    const dy = y - lastY;
+    lastY = y;
+    if (document.documentElement.classList.contains("menu-open") || y < 400) { travel = 0; setHidden(false); return; }
+    if (!dy) return;
+    travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy; // si azzera quando cambia direzione
+    if (travel > HIDE_AFTER) setHidden(true);
+    else if (travel < -SHOW_AFTER) setHidden(false);
+  }
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+  update();
   window.addEventListener("scroll", onScroll, { passive: true });
-  nav.addEventListener("focusin", () => nav.classList.remove("is-hidden"));
+  nav.addEventListener("focusin", () => setHidden(false));
 
   /* Menu mobile a schermo intero */
   const burger = nav.querySelector(".nav__burger");
@@ -39,7 +59,7 @@
     document.body.style.overflow = open ? "hidden" : "";
     if (window.EBM && window.EBM.lenis) open ? window.EBM.lenis.stop() : window.EBM.lenis.start();
     if (open) {
-      nav.classList.remove("is-hidden");
+      setHidden(false);
       const first = menu.querySelector("a");
       if (first) setTimeout(() => first.focus(), 80);
     }
